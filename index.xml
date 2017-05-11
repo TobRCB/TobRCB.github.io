@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tobias Recke</title>
+    <link>/</link>
+    <description>Recent content on Tobias Recke</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&amp;copy;2016 Tobias Recke</copyright>
+    <lastBuildDate>Wed, 10 May 2017 18:25:39 +0200</lastBuildDate>
+    
+	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>interactive plots with ggiraph</title>
+      <link>/snippets/ggiraph/</link>
+      <pubDate>Wed, 10 May 2017 18:25:39 +0200</pubDate>
+      
+      <guid>/snippets/ggiraph/</guid>
+      <description>library(ggplot2) library(ggiraph) library(dplyr) library(magrittr) library(maps) library(tidyr) df&amp;lt;-full_join(filter(wlcoeff, term==&amp;#39;O18&amp;#39;) %&amp;gt;% select(.,Name.of.site, estimate), select(wlsy, Name.of.site, r.squared)) df&amp;lt;-full_join(df, aswj %&amp;gt;% unnest(data) %&amp;gt;% select(Name.of.site, Latitude, Longitude, Altitude))%&amp;gt;% unique() ge&amp;lt;-ger[,1:3] names(ge)[1:2]&amp;lt;-c(&amp;quot;Longitude&amp;quot;, &amp;quot;Latitude&amp;quot;) df&amp;lt;-full_join(df,ge) df&amp;lt;-df %&amp;gt;% mutate_each(funs(round(.,3)), estimate, r.squared) df$tooltip=tooltip&amp;lt;-paste0(&amp;quot;&amp;lt;table&amp;gt;&amp;lt;th&amp;gt;&amp;quot;,df$Name.of.site,&amp;quot;&amp;lt;/th&amp;gt;&amp;lt;tr&amp;gt;&amp;lt;td&amp;gt;Slope: &amp;quot;, df$estimate, &amp;quot;&amp;lt;/td&amp;gt;&amp;lt;/tr&amp;gt;&amp;lt;tr&amp;gt;&amp;lt;td&amp;gt;R²: &amp;quot;, df$r.squared, &amp;quot;&amp;lt;/td&amp;gt;&amp;lt;/tr&amp;gt;&amp;lt;/table&amp;gt;&amp;quot;) g4&amp;lt;-ggplot() + geom_polygon(data=df, aes(x=Longitude, y=Latitude, group=group), fill=&amp;#39;white&amp;#39;)+ geom_point_interactive(data=df, aes(x=df$Longitude[!is.na(df$Longitude)], y=df$Latitude[!is.na(df$Latitude)], size=estimate, color=df$r.squared, tooltip=tooltip), show.legend = T)+ scale_size(&amp;#39;estimate&amp;#39;)+ scale_colour_gradient(&amp;quot;R²&amp;quot;, low = &amp;quot;lightblue&amp;quot;, high = &amp;quot;darkblue&amp;quot;)+ coord_equal(ratio=2/1.3)+ guides(color = guide_legend(order=2), size = guide_legend(order=1)) ggiraph(code = {print(g4)})  {&#34;</description>
+    </item>
+    
+    <item>
+      <title>Meteoric Water Lines from GNIP data</title>
+      <link>/blog/lmwls/</link>
+      <pubDate>Tue, 29 Nov 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/lmwls/</guid>
+      <description>The tutorial contains:
+* theoretical background of the GMWL
+* Data pre-processing
+* linear regression analyses (LMWLs)
+* result visualization in geographic map
+The tutorial depends on the following packages:
+* library(dplyr)
+* library(purrr)
+* library(tidyr)
+* library(zoo)
+*library(ggplot2)
+Theoretical Backround The hydrogen and oxygen isotopic signatures of precipitation are related on a global scale. The relationship was first observed by Harmon Craig (1961), who defined the Global Meteoric Water Line (GMWL):</description>
+    </item>
+    
+  </channel>
+</rss>

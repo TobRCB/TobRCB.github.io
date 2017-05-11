@@ -1,0 +1,65 @@
+---
+date: 2017-05-10T18:25:39+02:00
+draft: true
+title: interactive plots with ggiraph 
+description: "Snippet from the MWL tutorial"
+type: 'post'
+author: 'Tobias Recke'
+image: "blog/d3.jpeg"
+showonlyimage: true
+
+---
+
+
+```{r,  echo=F, message=FALSE, warning=FALSE, include=FALSE }
+load(file="/home/tob/Dropbox/Nanu/isotope/isotope/myEnv.RData")
+```
+
+```{r, echo=T, message=FALSE, warning=FALSE}
+
+library(ggplot2)
+library(ggiraph)
+library(dplyr)
+library(magrittr)
+library(maps)
+library(tidyr)
+
+
+df<-full_join(filter(wlcoeff, term=='O18') %>% select(.,Name.of.site, estimate), select(wlsy, Name.of.site, r.squared))
+df<-full_join(df, aswj %>% unnest(data) %>% select(Name.of.site, Latitude, Longitude, Altitude))%>% unique() 
+
+ge<-ger[,1:3]
+names(ge)[1:2]<-c("Longitude", "Latitude")
+df<-full_join(df,ge)
+df<-df %>% mutate_each(funs(round(.,3)), estimate, r.squared)
+
+df$tooltip=tooltip<-paste0("<table><th>",df$Name.of.site,"</th><tr><td>Slope: ", 
+                           df$estimate, "</td></tr><tr><td>R²: ", 
+                           df$r.squared, "</td></tr></table>")
+
+
+g4<-ggplot() +  geom_polygon(data=df, aes(x=Longitude, y=Latitude, group=group), fill='white')+
+  geom_point_interactive(data=df, aes(x=df$Longitude[!is.na(df$Longitude)], 
+                          y=df$Latitude[!is.na(df$Latitude)],
+                          size=estimate,
+                          color=df$r.squared,
+                          tooltip=tooltip), 
+                         show.legend = T)+
+  scale_size('estimate')+
+  scale_colour_gradient("R²", low = "lightblue", high = "darkblue")+
+  coord_equal(ratio=2/1.3)+
+  guides(color = guide_legend(order=2),
+         size = guide_legend(order=1))
+
+
+
+```
+
+```{r, echo=T, results='asis', warning=FALSE, message=FALSE,fig.height=8.4, fig.width=7, }
+
+ggiraph(code = {print(g4)})
+
+```
+
+
+

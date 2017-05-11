@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>interactive plots with ggiraph</title>
+<meta name="description" content="Describe your website">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="all,follow">
+<meta name="googlebot" content="index,follow,snippet,archive">
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:400,300,700,400italic">
+<link rel="stylesheet" href="/css/font-awesome.min.css">
+<link rel="stylesheet" href="/css/owl.carousel.css">
+<link rel="stylesheet" href="/css/owl.theme.css">
+
+
+  <link href="/css/style.sea.css" rel="stylesheet" id="theme-stylesheet">
+
+
+<link href="/css/custom.css" rel="stylesheet">
+<link rel="shortcut icon" href="/img/favicon.png">
+
+
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-98901969-1', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='//www.google-analytics.com/analytics.js'></script>
+
+
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-98901969-1', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='//www.google-analytics.com/analytics.js'></script>
+
+<script type="text/javascript"
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+</head>
+<body>
+  <div id="all">
+      <div class="container-fluid">
+          <div class="row row-offcanvas row-offcanvas-left">
+              
+<div id="sidebar" class="col-sb-fixedpos col-xs-6 col-sm-4 col-md-3 sidebar-offcanvas">
+  <div class="sidebar-content">
+    <h1 class="sidebar-heading"><a href="/">Tobias Recke</a></h1>
+
+    <ul class="sidebar-menu">
+      
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/about/">About</a></li>
+      
+        <li><a href="/blog/">Blog</a></li>
+      
+        <li><a href="/snippets/">Snippets</a></li>
+      
+        <li><a href="/contact/">Contact</a></li>
+      
+
+       
+
+ 
+
+      
+
+ 
+
+      
+ 
+
+    </ul>
+    <p class="social">
+  
+  
+  
+  
+  
+  
+  
+  
+<a href="https://www.github.com/TobRecke">
+  <i class="fa fa-github"></i>
+</a>
+
+
+<a href="/index.xml" data-animate-hover="pulse">
+  <i class='fa fa-rss'></i>
+</a>
+
+
+</p>
+
+
+    <div class="copyright">
+      <p class="credit">
+        
+          &copy;2016 Tobias Recke
+        
+        | Template by <a href="https://bootstrapious.com/free-templates" class="external">Bootstrapious.com</a>
+
+&amp; ported to Hugo by <a href="https://github.com/kishaningithub">Kishan B</a>
+
+      </p>
+    </div>
+  </div>
+</div>
+
+<div class="col-xs-12 col-sm-8 col-md-9 content-column white-background col-main-fixedpos">
+  <div class="small-navbar visible-xs">
+  <button type="button" data-toggle="offcanvas" class="btn btn-ghost pull-left"> <i class="fa fa-align-left"> </i>Menu</button>
+  <h1 class="small-navbar-heading"><a href="/">Tobias Recke</a></h1>
+</div>
+
+
+            <div class="row">
+                  <div class="col-sm-4">
+                    <div class="image">
+                      <img src="/blog/d3.jpeg" class="img-responsive" alt="">
+                    </div>
+                  </div>
+
+                  <div class="col-md-8">
+                      <h2>interactive plots with ggiraph</h2>
+                          <p class="author-category">
+                            Tobias Recke
+                          </p>
+
+                          <p class="date-comments">
+                          <i class="fa fa-calendar-o"></i> May 10, 2017
+                          </p>
+
+                          
+                  
+                      </div>
+                    </div>
+                  </br>
+
+<div class="row">
+   <div class="content-column-content">
+          <div class="col-lg-8">
+
+<script src="/rmarkdown-libs/htmlwidgets/htmlwidgets.js"></script>
+<script src="/rmarkdown-libs/d3/d3.min.js"></script>
+<link href="/rmarkdown-libs/styles/styles.css" rel="stylesheet" />
+<script src="/rmarkdown-libs/styles/styles.js"></script>
+<script src="/rmarkdown-libs/ggiraph-binding/ggiraph.js"></script>
+
+
+<pre class="r"><code>library(ggplot2)
+library(ggiraph)
+library(dplyr)
+library(magrittr)
+library(maps)
+library(tidyr)
+
+
+df&lt;-full_join(filter(wlcoeff, term==&#39;O18&#39;) %&gt;% select(.,Name.of.site, estimate), select(wlsy, Name.of.site, r.squared))
+df&lt;-full_join(df, aswj %&gt;% unnest(data) %&gt;% select(Name.of.site, Latitude, Longitude, Altitude))%&gt;% unique() 
+
+ge&lt;-ger[,1:3]
+names(ge)[1:2]&lt;-c(&quot;Longitude&quot;, &quot;Latitude&quot;)
+df&lt;-full_join(df,ge)
+df&lt;-df %&gt;% mutate_each(funs(round(.,3)), estimate, r.squared)
+
+df$tooltip=tooltip&lt;-paste0(&quot;&lt;table&gt;&lt;th&gt;&quot;,df$Name.of.site,&quot;&lt;/th&gt;&lt;tr&gt;&lt;td&gt;Slope: &quot;, 
+                           df$estimate, &quot;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;R²: &quot;, 
+                           df$r.squared, &quot;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&quot;)
+
+
+g4&lt;-ggplot() +  geom_polygon(data=df, aes(x=Longitude, y=Latitude, group=group), fill=&#39;white&#39;)+
+  geom_point_interactive(data=df, aes(x=df$Longitude[!is.na(df$Longitude)], 
+                          y=df$Latitude[!is.na(df$Latitude)],
+                          size=estimate,
+                          color=df$r.squared,
+                          tooltip=tooltip), 
+                         show.legend = T)+
+  scale_size(&#39;estimate&#39;)+
+  scale_colour_gradient(&quot;R²&quot;, low = &quot;lightblue&quot;, high = &quot;darkblue&quot;)+
+  coord_equal(ratio=2/1.3)+
+  guides(color = guide_legend(order=2),
+         size = guide_legend(order=1))</code></pre>
+<pre class="r"><code>ggiraph(code = {print(g4)})</code></pre>
+<div id="htmlwidget-1" style="width:70%;height:auto;" class="ggiraph html-widget"></div>
+<script type="application/json" data-for="htmlwidget-1">{"x":{"html":"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<svg xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" id=\"svg_1\" viewBox=\"0 0 432.00 432.00\">\n  <g>\n    <defs>\n      <clipPath id=\"cl1_0\">\n        <rect x=\"0.00\" y=\"432.00\" width=\"0.00\" height=\"0.00\"/>\n      <\/clipPath>\n    <\/defs>\n    <rect x=\"0.00\" y=\"0.00\" width=\"432.00\" height=\"432.00\" id=\"1\" clip-path=\"url(#cl1_0)\" fill=\"#FFFFFF\" fill-opacity=\"1\" stroke-width=\"0.75\" stroke=\"#FFFFFF\" stroke-opacity=\"1\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/>\n    <defs>\n      <clipPath id=\"cl1_1\">\n        <rect x=\"0.00\" y=\"0.00\" width=\"432.00\" height=\"432.00\"/>\n      <\/clipPath>\n    <\/defs>\n    <defs>\n      <clipPath id=\"cl1_2\">\n        <rect x=\"9.76\" y=\"0.00\" width=\"412.49\" height=\"432.00\"/>\n      <\/clipPath>\n    <\/defs>\n    <rect x=\"9.76\" y=\"-0.00\" width=\"412.49\" height=\"432.00\" id=\"2\" clip-path=\"url(#cl1_2)\" fill=\"#FFFFFF\" fill-opacity=\"1\" stroke-width=\"1.06698\" stroke=\"#FFFFFF\" stroke-opacity=\"1\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/>\n    <defs>\n      <clipPath id=\"cl1_3\">\n        <rect x=\"0.00\" y=\"0.00\" width=\"432.00\" height=\"432.00\"/>\n      <\/clipPath>\n    <\/defs>\n    <defs>\n      <clipPath id=\"cl1_4\">\n        <rect x=\"51.18\" y=\"5.48\" width=\"301.34\" height=\"393.79\"/>\n      <\/clipPath>\n    <\/defs>\n    <rect x=\"51.18\" y=\"5.48\" width=\"301.34\" height=\"393.79\" id=\"3\" clip-path=\"url(#cl1_4)\" fill=\"#EBEBEB\" fill-opacity=\"1\" stroke=\"none\"/>\n    <polyline points=\"51.18,313.67 352.51,313.67\" id=\"4\" clip-path=\"url(#cl1_4)\" fill=\"none\" stroke-width=\"0.533489\" stroke=\"#FFFFFF\" stroke-opacity=\"1\" stroke-linejoin=\"round\" stroke-linecap=\"butt\"/>\n    <polyline points=\"51.18,198.64 352.51,198.64\" id=\"5\" clip-path=\"url(#cl1_4)\" fill=\"none\" stroke-width=\"0.533489\" stroke=\"#FFFFFF\" stroke-opacity=\"1\" stroke-linejoin=\"round\" stroke-linecap=\"butt\"/>\n    <polyline points=\"51.18,83.60 352.51,83.60\" id=\"6\" clip-path=\"url(#cl1_4)\" fill=\"none\" stroke-width=\"0.533489\" stroke=\"#FFFFFF\" stroke-opacity=\"1\" stroke-linejoin=\"round\" stroke-linecap=\"butt\"/>\n    <polyline points=\"76.61,399.27 76.61,5.48\" id=\"7\" clip-path=\"url(#cl1_4)\" fill=\"none\" stroke-width=\"0.533489\" stroke=\"#FFFFFF\" stroke-opacity=\"1\" stroke-linejoin=\"round\" stroke-linecap=\"butt\"/>\n    <polyline points=\"151.39,399.27 151.39,5.48\" id=\"8\" clip-path=\"url(#cl1_4)\" fill=\"none\" stroke-width=\"0.533489\" stroke=\"#FFFFFF\" stroke-opacity=\"1\" stroke-linejoin=\"round\" stroke-linecap=\"butt\"/>\n    <polyline points=\"226.16,399.27 226.16,5.48\" id=\"9\" clip-path=\"url(#cl1_4)\" fill=\"none\" stroke-width=\"0.533489\" stroke=\"#FFFFFF\" stroke-opacity=\"1\" stroke-linejoin=\"round\" stroke-linecap=\"butt\"/>\n    <polyline points=\"300.93,399.27 300.93,5.48\" id=\"10\" clip-path=\"url(#cl1_4)\" fill=\"none\" stroke-width=\"0.533489\" stroke=\"#FFFFFF\" stroke-opacity=\"1\" stroke-linejoin=\"round\" stroke-linecap=\"butt\"/>\n    <polyline points=\"51.18,371.19 352.51,371.19\" id=\"11\" clip-path=\"url(#cl1_4)\" fill=\"none\" stroke-width=\"1.06698\" stroke=\"#FFFFFF\" stroke-opacity=\"1\" stroke-linejoin=\"round\" stroke-linecap=\"butt\"/>\n    <polyline points=\"51.18,256.15 352.51,256.15\" id=\"12\" clip-path=\"url(#cl1_4)\" fill=\"none\" stroke-width=\"1.06698\" stroke=\"#FFFFFF\" stroke-opacity=\"1\" stroke-linejoin=\"round\" stroke-linecap=\"butt\"/>\n    <polyline points=\"51.18,141.12 352.51,141.12\" id=\"13\" clip-path=\"url(#cl1_4)\" fill=\"none\" stroke-width=\"1.06698\" stroke=\"#FFFFFF\" stroke-opacity=\"1\" stroke-linejoin=\"round\" stroke-linecap=\"butt\"/>\n    <polyline points=\"51.18,26.08 352.51,26.08\" id=\"14\" clip-path=\"url(#cl1_4)\" fill=\"none\" stroke-width=\"1.06698\" stroke=\"#FFFFFF\" stroke-opacity=\"1\" stroke-linejoin=\"round\" stroke-linecap=\"butt\"/>\n    <polyline points=\"114.00,399.27 114.00,5.48\" id=\"15\" clip-path=\"url(#cl1_4)\" fill=\"none\" stroke-width=\"1.06698\" stroke=\"#FFFFFF\" stroke-opacity=\"1\" stroke-linejoin=\"round\" stroke-linecap=\"butt\"/>\n    <polyline points=\"188.77,399.27 188.77,5.48\" id=\"16\" clip-path=\"url(#cl1_4)\" fill=\"none\" stroke-width=\"1.06698\" stroke=\"#FFFFFF\" stroke-opacity=\"1\" stroke-linejoin=\"round\" stroke-linecap=\"butt\"/>\n    <polyline points=\"263.55,399.27 263.55,5.48\" id=\"17\" clip-path=\"url(#cl1_4)\" fill=\"none\" stroke-width=\"1.06698\" stroke=\"#FFFFFF\" stroke-opacity=\"1\" stroke-linejoin=\"round\" stroke-linecap=\"butt\"/>\n    <polyline points=\"338.32,399.27 338.32,5.48\" id=\"18\" clip-path=\"url(#cl1_4)\" fill=\"none\" stroke-width=\"1.06698\" stroke=\"#FFFFFF\" stroke-opacity=\"1\" stroke-linejoin=\"round\" stroke-linecap=\"butt\"/>\n    <polygon points=\"314.80,78.04 313.56,77.88 309.86,78.40 306.19,77.66 305.49,74.90 306.07,72.25 304.60,70.43 303.24,69.35 303.04,67.82 303.26,66.24 309.57,70.51 314.74,74.38 314.34,75.82 314.80,78.04\" id=\"19\" clip-path=\"url(#cl1_4)\" fill=\"#FFFFFF\" fill-opacity=\"1\" stroke=\"none\"/>\n    <polygon points=\"227.14,52.86 222.55,52.95 220.80,51.11 219.03,50.65 219.98,48.38 221.23,47.55 225.67,49.03 227.07,51.92 227.14,52.86\" id=\"20\" clip-path=\"url(#cl1_4)\" fill=\"#FFFFFF\" fill-opacity=\"1\" stroke=\"none\"/>\n    <polygon points=\"299.71,54.49 300.46,57.58 299.66,59.16 296.30,56.53 292.92,56.57 290.90,60.61 289.40,60.78 284.19,57.11 283.35,55.32 283.18,53.83 283.92,48.68 283.79,47.05 285.42,45.28 285.68,42.72 288.58,40.02 291.15,39.92 291.96,42.20 293.19,43.78 297.53,45.55 298.17,46.35 298.56,47.46 296.55,49.63 295.86,50.75 296.50,52.53 299.71,54.49\" id=\"21\" clip-path=\"url(#cl1_4)\" fill=\"#FFFFFF\" fill-opacity=\"1\" stroke=\"none\"/>\n    <polygon points=\"146.54,39.30 145.37,40.43 142.53,40.30 140.93,39.24 141.45,38.11 142.96,37.24 144.21,37.11 146.11,37.64 146.54,39.30\" id=\"22\" clip-path=\"url(#cl1_4)\" fill=\"#FFFFFF\" fill-opacity=\"1\" stroke=\"none\"/>\n    <polygon points=\"180.99,34.11 181.17,34.95 185.55,36.18 187.39,38.12 189.44,41.09 189.64,45.35 187.02,48.41 184.85,50.36 193.07,49.62 193.88,51.38 195.13,53.28 199.56,51.93 210.65,57.54 217.37,54.81 219.08,54.65 220.61,59.19 218.94,63.76 213.02,68.64 214.33,71.64 216.22,72.31 221.80,71.67 230.64,74.64 232.48,73.72 239.64,66.87 242.50,65.40 251.92,64.35 253.64,61.70 257.46,59.04 259.91,56.13 265.80,50.59 271.90,51.59 275.45,52.65 279.36,53.18 282.91,59.09 291.90,65.61 300.16,65.05 303.10,71.22 304.39,78.84 306.93,81.24 309.16,82.80 315.89,84.43 316.15,84.54 316.37,85.57 316.78,89.36 317.35,92.51 320.81,105.07 320.74,108.14 320.70,108.95 319.43,113.25 317.18,116.88 314.20,118.92 312.57,121.20 312.26,123.71 316.00,128.12 323.79,134.42 326.94,139.81 325.45,144.29 325.00,147.57 325.58,149.67 326.82,151.35 328.75,152.62 329.51,154.58 329.12,157.22 329.49,159.05 330.92,160.36 330.79,160.87 330.09,162.70 329.14,166.06 328.60,168.50 326.41,171.84 327.07,174.67 328.79,178.01 330.09,179.69 330.50,181.28 329.68,185.06 330.09,186.03 335.51,188.82 336.39,190.11 336.92,192.78 338.82,198.51 337.24,205.76 335.85,209.74 332.77,216.05 332.62,216.63 332.26,217.39 331.34,218.50 330.05,218.67 328.10,217.84 326.76,216.78 327.07,214.06 326.21,213.88 325.15,212.21 324.73,210.42 323.59,209.68 319.40,208.93 317.97,208.40 316.88,208.78 316.06,210.05 316.59,211.20 317.37,212.32 319.69,214.09 319.45,214.80 314.45,216.52 311.30,218.29 308.37,219.29 305.38,221.12 299.48,223.18 295.15,223.73 294.25,224.27 292.64,227.76 291.55,228.49 290.50,228.12 289.71,227.54 288.70,228.02 287.66,229.17 286.56,229.63 285.61,229.61 283.92,232.66 278.99,233.59 278.41,235.17 277.51,237.00 276.79,237.45 274.56,236.73 271.49,236.32 269.72,237.33 267.60,237.88 265.01,238.05 262.13,240.06 259.32,243.58 257.74,246.69 256.89,247.80 255.51,244.89 253.82,242.88 252.63,241.85 251.56,241.84 251.28,242.27 251.28,243.80 252.42,246.33 253.83,248.06 254.05,249.34 254.81,251.67 256.86,254.20 260.08,256.22 262.28,258.20 263.91,260.95 263.92,261.79 263.47,262.91 262.71,263.97 262.06,265.35 260.27,268.13 260.80,269.35 262.26,270.89 263.56,272.73 265.22,275.72 267.50,280.94 268.97,283.09 270.96,285.32 272.92,287.01 276.01,286.96 279.21,290.20 282.71,294.88 285.32,297.03 287.14,297.68 288.64,299.37 289.98,301.79 290.50,303.20 291.68,304.21 294.88,304.02 298.99,307.84 301.53,310.64 302.87,312.89 302.52,313.79 302.35,316.60 302.39,319.58 301.99,321.15 300.15,323.22 299.21,323.67 298.70,324.11 293.06,321.41 292.61,321.87 292.26,322.20 290.75,330.05 289.71,331.55 288.16,332.94 284.94,334.29 282.70,334.84 280.96,335.52 275.44,338.81 272.95,340.78 271.33,343.26 271.33,344.69 274.01,348.88 277.11,353.21 277.13,357.03 275.76,359.88 275.44,360.98 276.35,361.39 278.07,361.55 279.51,362.04 280.12,364.05 279.94,367.55 279.45,370.82 278.93,372.20 277.55,372.31 274.88,370.89 272.80,369.25 272.01,368.24 271.96,367.03 272.41,366.26 271.66,364.77 269.11,363.40 266.37,364.00 264.34,364.92 263.04,364.87 261.63,363.54 259.46,362.53 256.62,361.86 254.85,361.15 254.48,361.57 254.69,364.44 254.15,365.69 240.12,367.35 235.85,368.90 232.74,370.91 230.44,371.78 229.87,373.02 227.60,374.64 225.02,375.16 224.40,374.63 222.75,375.38 219.94,376.11 218.11,375.88 217.25,374.56 215.51,372.55 214.81,371.15 214.89,370.26 210.96,370.08 208.48,369.02 203.22,369.27 201.92,368.82 201.65,369.30 200.86,375.01 199.82,377.35 198.13,379.77 195.97,381.12 194.25,381.37 194.33,379.60 194.77,377.47 193.52,376.97 191.66,376.73 190.76,376.10 190.99,374.48 190.57,373.53 189.79,372.40 187.92,370.94 183.96,368.78 181.27,367.71 180.25,368.85 178.32,370.00 175.28,369.62 174.54,370.07 169.33,366.64 164.33,363.33 162.68,363.33 155.31,363.99 155.10,363.70 153.82,361.82 152.68,361.22 151.99,361.53 151.53,362.08 150.74,361.98 147.44,358.94 146.08,358.51 144.21,358.91 141.99,360.54 141.02,362.55 141.32,363.70 142.47,364.20 145.48,363.87 145.92,364.20 146.02,364.85 145.69,365.48 143.24,366.00 142.54,366.76 141.82,366.95 141.36,367.07 138.76,366.27 134.89,366.27 131.76,367.68 126.77,368.25 119.92,367.97 117.46,366.92 115.96,366.29 114.88,363.19 115.16,358.60 116.79,352.52 117.25,348.06 116.52,345.22 117.49,340.97 120.15,335.30 121.93,329.32 122.82,323.02 124.11,318.91 126.65,316.04 132.67,308.00 133.15,307.39 132.99,303.38 131.37,302.82 128.99,301.66 122.95,300.24 117.32,299.32 114.76,298.19 112.52,295.16 111.14,295.12 108.42,296.21 105.03,296.94 102.56,296.30 101.01,296.42 100.15,296.98 99.71,296.49 99.09,293.89 97.80,293.21 95.79,292.62 94.55,292.87 93.68,294.16 92.36,295.07 91.13,294.78 87.31,288.78 86.33,287.46 86.08,286.24 85.12,284.01 82.84,281.79 80.57,281.09 79.44,281.33 79.56,278.58 80.45,274.58 81.30,272.49 82.44,270.78 83.64,269.60 83.91,267.45 83.71,265.43 82.33,265.11 78.85,263.61 76.80,262.03 75.27,260.06 73.27,257.33 72.42,254.57 72.38,251.82 72.62,250.59 72.77,249.74 74.37,245.45 80.04,241.60 79.42,237.74 79.33,235.37 77.96,233.81 75.21,233.19 74.48,232.11 74.18,231.06 76.19,228.70 73.76,226.83 72.71,224.90 69.32,222.46 68.96,221.62 70.59,214.52 69.34,212.44 67.79,211.38 65.99,210.86 65.17,209.88 64.88,208.75 65.20,208.05 67.32,208.26 67.97,207.53 73.03,203.36 73.23,202.55 72.53,202.10 71.60,201.86 71.38,200.98 71.41,199.83 74.11,193.81 74.91,191.25 75.08,189.43 74.92,187.64 73.37,184.83 71.86,182.58 71.81,180.79 70.71,179.85 67.60,175.06 67.60,173.20 69.37,171.76 71.82,170.84 72.64,170.09 74.12,169.61 78.02,170.99 79.78,172.19 80.27,171.95 81.85,170.64 84.62,170.84 91.32,168.22 92.32,166.96 93.08,165.63 93.14,165.04 90.54,162.46 90.46,161.51 90.81,160.43 91.54,159.58 93.08,159.01 94.71,157.88 98.37,154.67 99.63,151.88 100.02,148.87 100.10,146.63 99.10,144.84 98.09,143.69 96.72,143.87 94.04,143.77 91.53,142.77 90.16,141.15 89.82,139.73 90.45,138.83 90.63,137.73 90.23,136.62 90.40,135.69 91.52,134.95 99.44,134.97 100.03,134.15 100.57,129.85 102.55,123.31 104.42,119.66 104.73,118.13 104.70,109.50 104.95,105.12 103.59,103.07 100.64,100.82 101.27,96.13 102.25,92.48 105.22,87.99 107.58,86.76 117.87,86.03 129.23,86.33 133.95,93.11 132.20,96.59 134.96,98.21 136.29,97.62 137.30,94.59 137.98,91.23 138.94,90.22 142.46,92.72 143.69,94.44 143.77,99.97 145.06,92.49 144.10,87.25 144.76,82.17 146.17,79.53 147.47,77.85 155.81,79.66 165.01,78.72 168.50,80.68 176.37,90.48 179.00,92.08 182.31,92.59 177.75,90.49 168.20,78.58 165.34,77.10 160.95,76.65 158.21,75.49 156.48,73.69 155.98,72.08 156.07,60.10 154.43,58.31 152.30,57.69 150.97,58.51 148.25,58.52 147.67,55.81 148.34,53.80 153.82,52.42 157.43,50.58 157.59,47.33 155.30,44.77 152.57,40.07 149.36,35.66 149.00,30.53 149.02,30.53 154.60,30.63 155.96,30.82 164.42,33.23 166.49,34.92 169.09,34.99 173.78,33.42 177.28,32.73 178.64,33.70 180.55,34.11 180.99,34.11\" id=\"23\" clip-path=\"url(#cl1_4)\" fill=\"#FFFFFF\" fill-opacity=\"1\" stroke=\"none\"/>\n    <polygon points=\"138.16,35.88 137.47,36.80 137.80,30.30 141.07,23.38 142.46,23.53 141.04,25.40 140.63,26.71 140.06,29.33 140.32,30.69 147.79,31.06 146.92,32.28 139.35,33.09 138.16,35.88\" id=\"24\" clip-path=\"url(#cl1_4)\" fill=\"#FFFFFF\" fill-opacity=\"1\" stroke=\"none\"/>\n    <polygon points=\"91.11,91.31 88.34,91.46 89.13,90.24 91.71,89.33 93.09,89.33 91.11,91.31\" id=\"25\" clip-path=\"url(#cl1_4)\" fill=\"#FFFFFF\" fill-opacity=\"1\" stroke=\"none\"/>\n    <polygon points=\"220.54,371.98 175.27,47.82 219.01,357.35 164.55,363.03 251.64,300.23 164.85,310.08 139.87,300.36 244.88,241.80 187.51,266.72 88.82,267.76 187.06,233.27 116.99,240.60 150.07,78.02 76.61,171.95 202.13,150.72 290.52,142.63 151.44,159.33 116.83,366.78 227.41,192.91 220.49,47.79 336.84,202.68 143.58,201.86 103.59,85.34 289.05,323.10 240.50,123.12\" id=\"26\" clip-path=\"url(#cl1_4)\" fill=\"#FFFFFF\" fill-opacity=\"1\" stroke=\"none\"/>\n    <circle cx=\"220.54\" cy=\"371.98\" r=\"4.92pt\" id=\"27\" clip-path=\"url(#cl1_4)\" fill=\"#150A8E\" fill-opacity=\"1\" stroke-width=\"0.708661\" stroke=\"#150A8E\" stroke-opacity=\"1\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/>\n    <circle cx=\"175.27\" cy=\"47.82\" r=\"3.39pt\" id=\"28\" clip-path=\"url(#cl1_4)\" fill=\"#483AA2\" fill-opacity=\"1\" stroke-width=\"0.708661\" stroke=\"#483AA2\" stroke-opacity=\"1\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/>\n    <circle cx=\"219.01\" cy=\"357.35\" r=\"4.62pt\" id=\"29\" clip-path=\"url(#cl1_4)\" fill=\"#00008B\" fill-opacity=\"1\" stroke-width=\"0.708661\" stroke=\"#00008B\" stroke-opacity=\"1\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/>\n    <circle cx=\"164.55\" cy=\"363.03\" r=\"4.60pt\" id=\"30\" clip-path=\"url(#cl1_4)\" fill=\"#190D8F\" fill-opacity=\"1\" stroke-width=\"0.708661\" stroke=\"#190D8F\" stroke-opacity=\"1\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/>\n    <circle cx=\"251.64\" cy=\"300.23\" r=\"5.07pt\" id=\"31\" clip-path=\"url(#cl1_4)\" fill=\"#41339F\" fill-opacity=\"1\" stroke-width=\"0.708661\" stroke=\"#41339F\" stroke-opacity=\"1\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/>\n    <circle cx=\"164.85\" cy=\"310.08\" r=\"4.46pt\" id=\"32\" clip-path=\"url(#cl1_4)\" fill=\"#2F2097\" fill-opacity=\"1\" stroke-width=\"0.708661\" stroke=\"#2F2097\" stroke-opacity=\"1\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/>\n    <circle cx=\"139.87\" cy=\"300.36\" r=\"3.30pt\" id=\"33\" clip-path=\"url(#cl1_4)\" fill=\"#1F1291\" fill-opacity=\"1\" stroke-width=\"0.708661\" stroke=\"#1F1291\" stroke-opacity=\"1\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/>\n    <circle cx=\"244.88\" cy=\"241.80\" r=\"4.73pt\" id=\"34\" clip-path=\"url(#cl1_4)\" fill=\"#2B1C95\" fill-opacity=\"1\" stroke-width=\"0.708661\" stroke=\"#2B1C95\" stroke-opacity=\"1\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/>\n    <circle cx=\"187.51\" cy=\"266.72\" r=\"4.29pt\" id=\"35\" clip-path=\"url(#cl1_4)\" fill=\"#1F1291\" fill-opacity=\"1\" stroke-width=\"0.708661\" stroke=\"#1F1291\" stroke-opacity=\"1\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/>\n    <circle cx=\"88.82\" cy=\"267.76\" r=\"3.37pt\" id=\"36\" clip-path=\"url(#cl1_4)\" fill=\"#4F43A6\" fill-opacity=\"1\" stroke-width=\"0.708661\" stroke=\"#4F43A6\" stroke-opacity=\"1\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/>\n    <circle cx=\"187.06\" cy=\"233.27\" r=\"4.23pt\" id=\"37\" clip-path=\"url(#cl1_4)\" fill=\"#291A94\" fill-opacity=\"1\" stroke-width=\"0.708661\" stroke=\"#291A94\" stroke-opacity=\"1\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/>\n    <circle cx=\"116.99\" cy=\"240.60\" r=\"2.83pt\" id=\"38\" clip-path=\"url(#cl1_4)\" fill=\"#4335A0\" fill-opacity=\"1\" stroke-width=\"0.708661\" stroke=\"#4335A0\" stroke-opacity=\"1\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/>\n    <circle cx=\"150.07\" cy=\"78.02\" r=\"2.88pt\" id=\"39\" clip-path=\"url(#cl1_4)\" fill=\"#6E6CB9\" fill-opacity=\"1\" stroke-width=\"0.708661\" stroke=\"#6E6CB9\" stroke-opacity=\"1\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/>\n    <circle cx=\"76.61\" cy=\"171.95\" r=\"3.33pt\" id=\"40\" clip-path=\"url(#cl1_4)\" fill=\"#4C3FA5\" fill-opacity=\"1\" stroke-width=\"0.708661\" stroke=\"#4C3FA5\" stroke-opacity=\"1\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/>\n    <circle cx=\"202.13\" cy=\"150.72\" r=\"3.19pt\" id=\"41\" clip-path=\"url(#cl1_4)\" fill=\"#ADD8E6\" fill-opacity=\"1\" stroke-width=\"0.708661\" stroke=\"#ADD8E6\" stroke-opacity=\"1\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/>\n    <circle cx=\"290.52\" cy=\"142.63\" r=\"2.38pt\" id=\"42\" clip-path=\"url(#cl1_4)\" fill=\"#6661B4\" fill-opacity=\"1\" stroke-width=\"0.708661\" stroke=\"#6661B4\" stroke-opacity=\"1\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/>\n    <circle cx=\"151.44\" cy=\"159.33\" r=\"3.75pt\" id=\"43\" clip-path=\"url(#cl1_4)\" fill=\"#493CA3\" fill-opacity=\"1\" stroke-width=\"0.708661\" stroke=\"#493CA3\" stroke-opacity=\"1\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/>\n    <circle cx=\"116.83\" cy=\"366.78\" r=\"4.34pt\" id=\"44\" clip-path=\"url(#cl1_4)\" fill=\"#190D8F\" fill-opacity=\"1\" stroke-width=\"0.708661\" stroke=\"#190D8F\" stroke-opacity=\"1\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/>\n    <circle cx=\"227.41\" cy=\"192.91\" r=\"3.32pt\" id=\"45\" clip-path=\"url(#cl1_4)\" fill=\"#2B1C95\" fill-opacity=\"1\" stroke-width=\"0.708661\" stroke=\"#2B1C95\" stroke-opacity=\"1\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/>\n    <circle cx=\"220.49\" cy=\"47.79\" r=\"3.45pt\" id=\"46\" clip-path=\"url(#cl1_4)\" fill=\"#312297\" fill-opacity=\"1\" stroke-width=\"0.708661\" stroke=\"#312297\" stroke-opacity=\"1\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/>\n    <circle cx=\"336.84\" cy=\"202.68\" r=\"3.25pt\" id=\"47\" clip-path=\"url(#cl1_4)\" fill=\"#2B1C95\" fill-opacity=\"1\" stroke-width=\"0.708661\" stroke=\"#2B1C95\" stroke-opacity=\"1\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/>\n    <circle cx=\"143.58\" cy=\"201.86\" r=\"3.22pt\" id=\"48\" clip-path=\"url(#cl1_4)\" fill=\"#2D1E96\" fill-opacity=\"1\" stroke-width=\"0.708661\" stroke=\"#2D1E96\" stroke-opacity=\"1\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/>\n    <circle cx=\"103.59\" cy=\"85.34\" r=\"3.67pt\" id=\"49\" clip-path=\"url(#cl1_4)\" fill=\"#4335A0\" fill-opacity=\"1\" stroke-width=\"0.708661\" stroke=\"#4335A0\" stroke-opacity=\"1\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/>\n    <circle cx=\"289.05\" cy=\"323.10\" r=\"4.15pt\" id=\"50\" clip-path=\"url(#cl1_4)\" fill=\"#06028C\" fill-opacity=\"1\" stroke-width=\"0.708661\" stroke=\"#06028C\" stroke-opacity=\"1\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/>\n    <circle cx=\"240.50\" cy=\"123.12\" r=\"1.07pt\" id=\"51\" clip-path=\"url(#cl1_4)\" fill=\"#2F2097\" fill-opacity=\"1\" stroke-width=\"0.708661\" stroke=\"#2F2097\" stroke-opacity=\"1\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/>\n    <defs>\n      <clipPath id=\"cl1_5\">\n        <rect x=\"0.00\" y=\"0.00\" width=\"432.00\" height=\"432.00\"/>\n      <\/clipPath>\n    <\/defs>\n    <g clip-path=\"url(#cl1_5)\">\n      <text x=\"28.73\" y=\"374.41\" id=\"52\" font-size=\"6.60pt\" fill=\"#4D4D4D\" fill-opacity=\"1\" font-family=\"Arial\">47.5<\/text>\n    <\/g>\n    <g clip-path=\"url(#cl1_5)\">\n      <text x=\"28.73\" y=\"259.37\" id=\"53\" font-size=\"6.60pt\" fill=\"#4D4D4D\" fill-opacity=\"1\" font-family=\"Arial\">50.0<\/text>\n    <\/g>\n    <g clip-path=\"url(#cl1_5)\">\n      <text x=\"28.73\" y=\"144.34\" id=\"54\" font-size=\"6.60pt\" fill=\"#4D4D4D\" fill-opacity=\"1\" font-family=\"Arial\">52.5<\/text>\n    <\/g>\n    <g clip-path=\"url(#cl1_5)\">\n      <text x=\"28.73\" y=\"29.30\" id=\"55\" font-size=\"6.60pt\" fill=\"#4D4D4D\" fill-opacity=\"1\" font-family=\"Arial\">55.0<\/text>\n    <\/g>\n    <polyline points=\"48.44,371.19 51.18,371.19\" id=\"56\" clip-path=\"url(#cl1_5)\" fill=\"none\" stroke-width=\"1.06698\" stroke=\"#333333\" stroke-opacity=\"1\" stroke-linejoin=\"round\" stroke-linecap=\"butt\"/>\n    <polyline points=\"48.44,256.15 51.18,256.15\" id=\"57\" clip-path=\"url(#cl1_5)\" fill=\"none\" stroke-width=\"1.06698\" stroke=\"#333333\" stroke-opacity=\"1\" stroke-linejoin=\"round\" stroke-linecap=\"butt\"/>\n    <polyline points=\"48.44,141.12 51.18,141.12\" id=\"58\" clip-path=\"url(#cl1_5)\" fill=\"none\" stroke-width=\"1.06698\" stroke=\"#333333\" stroke-opacity=\"1\" stroke-linejoin=\"round\" stroke-linecap=\"butt\"/>\n    <polyline points=\"48.44,26.08 51.18,26.08\" id=\"59\" clip-path=\"url(#cl1_5)\" fill=\"none\" stroke-width=\"1.06698\" stroke=\"#333333\" stroke-opacity=\"1\" stroke-linejoin=\"round\" stroke-linecap=\"butt\"/>\n    <polyline points=\"114.00,402.01 114.00,399.27\" id=\"60\" clip-path=\"url(#cl1_5)\" fill=\"none\" stroke-width=\"1.06698\" stroke=\"#333333\" stroke-opacity=\"1\" stroke-linejoin=\"round\" stroke-linecap=\"butt\"/>\n    <polyline points=\"188.77,402.01 188.77,399.27\" id=\"61\" clip-path=\"url(#cl1_5)\" fill=\"none\" stroke-width=\"1.06698\" stroke=\"#333333\" stroke-opacity=\"1\" stroke-linejoin=\"round\" stroke-linecap=\"butt\"/>\n    <polyline points=\"263.55,402.01 263.55,399.27\" id=\"62\" clip-path=\"url(#cl1_5)\" fill=\"none\" stroke-width=\"1.06698\" stroke=\"#333333\" stroke-opacity=\"1\" stroke-linejoin=\"round\" stroke-linecap=\"butt\"/>\n    <polyline points=\"338.32,402.01 338.32,399.27\" id=\"63\" clip-path=\"url(#cl1_5)\" fill=\"none\" stroke-width=\"1.06698\" stroke=\"#333333\" stroke-opacity=\"1\" stroke-linejoin=\"round\" stroke-linecap=\"butt\"/>\n    <g clip-path=\"url(#cl1_5)\">\n      <text x=\"107.75\" y=\"410.63\" id=\"64\" font-size=\"6.60pt\" fill=\"#4D4D4D\" fill-opacity=\"1\" font-family=\"Arial\">7.5<\/text>\n    <\/g>\n    <g clip-path=\"url(#cl1_5)\">\n      <text x=\"180.02\" y=\"410.63\" id=\"65\" font-size=\"6.60pt\" fill=\"#4D4D4D\" fill-opacity=\"1\" font-family=\"Arial\">10.0<\/text>\n    <\/g>\n    <g clip-path=\"url(#cl1_5)\">\n      <text x=\"254.79\" y=\"410.63\" id=\"66\" font-size=\"6.60pt\" fill=\"#4D4D4D\" fill-opacity=\"1\" font-family=\"Arial\">12.5<\/text>\n    <\/g>\n    <g clip-path=\"url(#cl1_5)\">\n      <text x=\"329.56\" y=\"410.63\" id=\"67\" font-size=\"6.60pt\" fill=\"#4D4D4D\" fill-opacity=\"1\" font-family=\"Arial\">15.0<\/text>\n    <\/g>\n    <g clip-path=\"url(#cl1_5)\">\n      <text x=\"177.69\" y=\"423.99\" id=\"68\" font-size=\"8.25pt\" font-family=\"Arial\">Longitude<\/text>\n    <\/g>\n    <g clip-path=\"url(#cl1_5)\">\n      <text transform=\"translate(23.11,221.94) rotate(-90)\" id=\"69\" font-size=\"8.25pt\" font-family=\"Arial\">Latitude<\/text>\n    <\/g>\n    <rect x=\"363.85\" y=\"112.69\" width=\"52.91\" height=\"92.65\" id=\"70\" clip-path=\"url(#cl1_5)\" fill=\"#FFFFFF\" fill-opacity=\"1\" stroke=\"none\"/>\n    <g clip-path=\"url(#cl1_5)\">\n      <text x=\"369.52\" y=\"126.23\" id=\"71\" font-size=\"8.25pt\" font-family=\"Arial\">estimate<\/text>\n    <\/g>\n    <rect x=\"369.52\" y=\"130.55\" width=\"17.28\" height=\"17.28\" id=\"72\" clip-path=\"url(#cl1_5)\" fill=\"#F2F2F2\" fill-opacity=\"1\" stroke-width=\"1.06698\" stroke=\"#FFFFFF\" stroke-opacity=\"1\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/>\n    <circle cx=\"378.16\" cy=\"139.19\" r=\"2.83pt\" id=\"73\" clip-path=\"url(#cl1_5)\" fill=\"#000000\" fill-opacity=\"1\" stroke-width=\"0.708661\" stroke=\"#000000\" stroke-opacity=\"1\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/>\n    <rect x=\"369.52\" y=\"147.83\" width=\"17.28\" height=\"17.28\" id=\"74\" clip-path=\"url(#cl1_5)\" fill=\"#F2F2F2\" fill-opacity=\"1\" stroke-width=\"1.06698\" stroke=\"#FFFFFF\" stroke-opacity=\"1\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/>\n    <circle cx=\"378.16\" cy=\"156.47\" r=\"3.74pt\" id=\"75\" clip-path=\"url(#cl1_5)\" fill=\"#000000\" fill-opacity=\"1\" stroke-width=\"0.708661\" stroke=\"#000000\" stroke-opacity=\"1\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/>\n    <rect x=\"369.52\" y=\"165.11\" width=\"17.28\" height=\"17.28\" id=\"76\" clip-path=\"url(#cl1_5)\" fill=\"#F2F2F2\" fill-opacity=\"1\" stroke-width=\"1.06698\" stroke=\"#FFFFFF\" stroke-opacity=\"1\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/>\n    <circle cx=\"378.16\" cy=\"173.75\" r=\"4.41pt\" id=\"77\" clip-path=\"url(#cl1_5)\" fill=\"#000000\" fill-opacity=\"1\" stroke-width=\"0.708661\" stroke=\"#000000\" stroke-opacity=\"1\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/>\n    <rect x=\"369.52\" y=\"182.39\" width=\"17.28\" height=\"17.28\" id=\"78\" clip-path=\"url(#cl1_5)\" fill=\"#F2F2F2\" fill-opacity=\"1\" stroke-width=\"1.06698\" stroke=\"#FFFFFF\" stroke-opacity=\"1\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/>\n    <circle cx=\"378.16\" cy=\"191.03\" r=\"4.97pt\" id=\"79\" clip-path=\"url(#cl1_5)\" fill=\"#000000\" fill-opacity=\"1\" stroke-width=\"0.708661\" stroke=\"#000000\" stroke-opacity=\"1\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/>\n    <g clip-path=\"url(#cl1_5)\">\n      <text x=\"388.96\" y=\"142.41\" id=\"80\" font-size=\"6.60pt\" font-family=\"Arial\">7.50<\/text>\n    <\/g>\n    <g clip-path=\"url(#cl1_5)\">\n      <text x=\"388.96\" y=\"159.69\" id=\"81\" font-size=\"6.60pt\" font-family=\"Arial\">7.75<\/text>\n    <\/g>\n    <g clip-path=\"url(#cl1_5)\">\n      <text x=\"388.96\" y=\"176.97\" id=\"82\" font-size=\"6.60pt\" font-family=\"Arial\">8.00<\/text>\n    <\/g>\n    <g clip-path=\"url(#cl1_5)\">\n      <text x=\"388.96\" y=\"194.25\" id=\"83\" font-size=\"6.60pt\" font-family=\"Arial\">8.25<\/text>\n    <\/g>\n    <rect x=\"363.85\" y=\"216.68\" width=\"48.30\" height=\"75.37\" id=\"84\" clip-path=\"url(#cl1_5)\" fill=\"#FFFFFF\" fill-opacity=\"1\" stroke=\"none\"/>\n    <g clip-path=\"url(#cl1_5)\">\n      <text x=\"369.52\" y=\"230.23\" id=\"85\" font-size=\"8.25pt\" font-family=\"Arial\">R²<\/text>\n    <\/g>\n    <rect x=\"369.52\" y=\"234.55\" width=\"17.28\" height=\"17.28\" id=\"86\" clip-path=\"url(#cl1_5)\" fill=\"#F2F2F2\" fill-opacity=\"1\" stroke-width=\"1.06698\" stroke=\"#FFFFFF\" stroke-opacity=\"1\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/>\n    <circle cx=\"378.16\" cy=\"243.19\" r=\"1.47pt\" id=\"87\" clip-path=\"url(#cl1_5)\" fill=\"#94A9D3\" fill-opacity=\"1\" stroke-width=\"0.708661\" stroke=\"#94A9D3\" stroke-opacity=\"1\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/>\n    <rect x=\"369.52\" y=\"251.83\" width=\"17.28\" height=\"17.28\" id=\"88\" clip-path=\"url(#cl1_5)\" fill=\"#F2F2F2\" fill-opacity=\"1\" stroke-width=\"1.06698\" stroke=\"#FFFFFF\" stroke-opacity=\"1\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/>\n    <circle cx=\"378.16\" cy=\"260.47\" r=\"1.47pt\" id=\"89\" clip-path=\"url(#cl1_5)\" fill=\"#7172BB\" fill-opacity=\"1\" stroke-width=\"0.708661\" stroke=\"#7172BB\" stroke-opacity=\"1\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/>\n    <rect x=\"369.52\" y=\"269.11\" width=\"17.28\" height=\"17.28\" id=\"90\" clip-path=\"url(#cl1_5)\" fill=\"#F2F2F2\" fill-opacity=\"1\" stroke-width=\"1.06698\" stroke=\"#FFFFFF\" stroke-opacity=\"1\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/>\n    <circle cx=\"378.16\" cy=\"277.75\" r=\"1.47pt\" id=\"91\" clip-path=\"url(#cl1_5)\" fill=\"#493CA3\" fill-opacity=\"1\" stroke-width=\"0.708661\" stroke=\"#493CA3\" stroke-opacity=\"1\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/>\n    <g clip-path=\"url(#cl1_5)\">\n      <text x=\"388.96\" y=\"246.40\" id=\"92\" font-size=\"6.60pt\" font-family=\"Arial\">0.90<\/text>\n    <\/g>\n    <g clip-path=\"url(#cl1_5)\">\n      <text x=\"388.96\" y=\"263.68\" id=\"93\" font-size=\"6.60pt\" font-family=\"Arial\">0.93<\/text>\n    <\/g>\n    <g clip-path=\"url(#cl1_5)\">\n      <text x=\"388.96\" y=\"280.96\" id=\"94\" font-size=\"6.60pt\" font-family=\"Arial\">0.96<\/text>\n    <\/g>\n  <\/g>\n<\/svg>\n","code":"document.querySelectorAll('#svg_1')[0].getElementById('27').setAttribute('title','<table><th>GARMISCH-PARTENKIRCHEN<\/th><tr><td>Slope: 8.227<\/td><\/tr><tr><td>R²: 0.985<\/td><\/tr><\/table>');document.querySelectorAll('#svg_1')[0].getElementById('28').setAttribute('title','<table><th>SCHLESWIG<\/th><tr><td>Slope: 7.642<\/td><\/tr><tr><td>R²: 0.961<\/td><\/tr><\/table>');document.querySelectorAll('#svg_1')[0].getElementById('29').setAttribute('title','<table><th>HOHENPEISSENBERG<\/th><tr><td>Slope: 8.087<\/td><\/tr><tr><td>R²: 0.989<\/td><\/tr><\/table>');document.querySelectorAll('#svg_1')[0].getElementById('30').setAttribute('title','<table><th>KONSTANZ<\/th><tr><td>Slope: 8.081<\/td><\/tr><tr><td>R²: 0.984<\/td><\/tr><\/table>');document.querySelectorAll('#svg_1')[0].getElementById('31').setAttribute('title','<table><th>REGENSBURG<\/th><tr><td>Slope: 8.298<\/td><\/tr><tr><td>R²: 0.965<\/td><\/tr><\/table>');document.querySelectorAll('#svg_1')[0].getElementById('32').setAttribute('title','<table><th>STUTTGART<\/th><tr><td>Slope: 8.019<\/td><\/tr><tr><td>R²: 0.975<\/td><\/tr><\/table>');document.querySelectorAll('#svg_1')[0].getElementById('33').setAttribute('title','<table><th>KARLSRUHE<\/th><tr><td>Slope: 7.617<\/td><\/tr><tr><td>R²: 0.982<\/td><\/tr><\/table>');document.querySelectorAll('#svg_1')[0].getElementById('34').setAttribute('title','<table><th>HOF-HOHENSAAS<\/th><tr><td>Slope: 8.138<\/td><\/tr><tr><td>R²: 0.977<\/td><\/tr><\/table>');document.querySelectorAll('#svg_1')[0].getElementById('35').setAttribute('title','<table><th>WUERZBURG<\/th><tr><td>Slope: 7.949<\/td><\/tr><tr><td>R²: 0.982<\/td><\/tr><\/table>');document.querySelectorAll('#svg_1')[0].getElementById('36').setAttribute('title','<table><th>TRIER<\/th><tr><td>Slope: 7.637<\/td><\/tr><tr><td>R²: 0.956<\/td><\/tr><\/table>');document.querySelectorAll('#svg_1')[0].getElementById('37').setAttribute('title','<table><th>WASSERKUPPE RHOEN<\/th><tr><td>Slope: 7.927<\/td><\/tr><tr><td>R²: 0.978<\/td><\/tr><\/table>');document.querySelectorAll('#svg_1')[0].getElementById('38').setAttribute('title','<table><th>KOBLENZ<\/th><tr><td>Slope: 7.501<\/td><\/tr><tr><td>R²: 0.964<\/td><\/tr><\/table>');document.querySelectorAll('#svg_1')[0].getElementById('39').setAttribute('title','<table><th>CUXHAVEN<\/th><tr><td>Slope: 7.512<\/td><\/tr><tr><td>R²: 0.933<\/td><\/tr><\/table>');document.querySelectorAll('#svg_1')[0].getElementById('40').setAttribute('title','<table><th>EMMERICH<\/th><tr><td>Slope: 7.625<\/td><\/tr><tr><td>R²: 0.958<\/td><\/tr><\/table>');document.querySelectorAll('#svg_1')[0].getElementById('41').setAttribute('title','<table><th>BRAUNSCHWEIG<\/th><tr><td>Slope: 7.588<\/td><\/tr><tr><td>R²: 0.876<\/td><\/tr><\/table>');document.querySelectorAll('#svg_1')[0].getElementById('42').setAttribute('title','<table><th>BERLIN<\/th><tr><td>Slope: 7.415<\/td><\/tr><tr><td>R²: 0.939<\/td><\/tr><\/table>');document.querySelectorAll('#svg_1')[0].getElementById('43').setAttribute('title','<table><th>BAD SALZUFLEN<\/th><tr><td>Slope: 7.755<\/td><\/tr><tr><td>R²: 0.96<\/td><\/tr><\/table>');document.querySelectorAll('#svg_1')[0].getElementById('44').setAttribute('title','<table><th>WEIL AM RHEIN<\/th><tr><td>Slope: 7.971<\/td><\/tr><tr><td>R²: 0.984<\/td><\/tr><\/table>');document.querySelectorAll('#svg_1')[0].getElementById('45').setAttribute('title','<table><th>ARTERN<\/th><tr><td>Slope: 7.623<\/td><\/tr><tr><td>R²: 0.977<\/td><\/tr><\/table>');document.querySelectorAll('#svg_1')[0].getElementById('46').setAttribute('title','<table><th>FEHMARN<\/th><tr><td>Slope: 7.66<\/td><\/tr><tr><td>R²: 0.974<\/td><\/tr><\/table>');document.querySelectorAll('#svg_1')[0].getElementById('47').setAttribute('title','<table><th>GOERLITZ<\/th><tr><td>Slope: 7.604<\/td><\/tr><tr><td>R²: 0.977<\/td><\/tr><\/table>');document.querySelectorAll('#svg_1')[0].getElementById('48').setAttribute('title','<table><th>KAHLER ASTEN<\/th><tr><td>Slope: 7.596<\/td><\/tr><tr><td>R²: 0.976<\/td><\/tr><\/table>');document.querySelectorAll('#svg_1')[0].getElementById('49').setAttribute('title','<table><th>NORDERNEY<\/th><tr><td>Slope: 7.727<\/td><\/tr><tr><td>R²: 0.964<\/td><\/tr><\/table>');document.querySelectorAll('#svg_1')[0].getElementById('50').setAttribute('title','<table><th>PASSAU-FUERSTENZELL<\/th><tr><td>Slope: 7.898<\/td><\/tr><tr><td>R²: 0.988<\/td><\/tr><\/table>');document.querySelectorAll('#svg_1')[0].getElementById('51').setAttribute('title','<table><th>SEEHAUSEN<\/th><tr><td>Slope: 7.308<\/td><\/tr><tr><td>R²: 0.975<\/td><\/tr><\/table>');","tooltip_extra_css":"padding:5px;background:black;color:white;border-radius:2px 2px 2px 2px;","hover_css":"fill:orange;","selected_css":"fill:orange;","tooltip_opacity":0.9,"tooltip_offx":10,"tooltip_offy":0,"zoom_max":1,"selection_type":"multiple","ratio":1,"flexdashboard":false,"width":0.7},"evals":[],"jsHooks":[]}</script>
+
+      
+       </div>
+     </div>
+   </div>
+
+
+
+
+
+        <a href="#" class="back-to-top">
+        <i class="fa fa-arrow-circle-o-up" aria-hidden="true"></i>
+
+        </a>
+
+         
+      </div>
+   
+
+          </div>
+      </div>
+  </div>
+  <script src="/js/jquery.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/jquery.cookie.js"> </script>
+<script src="/js/ekko-lightbox.js"></script>
+<script src="/js/jquery.scrollTo.min.js"></script>
+<script src="/js/masonry.pkgd.min.js"></script>
+<script src="/js/imagesloaded.pkgd.min.js"></script>
+<script src="/js/owl.carousel.min.js"></script>
+<script src="/js/front.js"></script>
+<script src="/js/math-code.js"></script>
+<script src="/js/main.js"></script>
+
+</body>
+</html>

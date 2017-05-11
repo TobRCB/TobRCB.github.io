@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Blogs on Tobias Recke</title>
+    <link>/blog/</link>
+    <description>Recent content in Blogs on Tobias Recke</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&amp;copy;2016 Tobias Recke</copyright>
+    <lastBuildDate>Tue, 29 Nov 2016 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/blog/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Meteoric Water Lines from GNIP data</title>
+      <link>/blog/lmwls/</link>
+      <pubDate>Tue, 29 Nov 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/lmwls/</guid>
+      <description>The tutorial contains:
+* theoretical background of the GMWL
+* Data pre-processing
+* linear regression analyses (LMWLs)
+* result visualization in geographic map
+The tutorial depends on the following packages:
+* library(dplyr)
+* library(purrr)
+* library(tidyr)
+* library(zoo)
+*library(ggplot2)
+Theoretical Backround The hydrogen and oxygen isotopic signatures of precipitation are related on a global scale. The relationship was first observed by Harmon Craig (1961), who defined the Global Meteoric Water Line (GMWL):</description>
+    </item>
+    
+  </channel>
+</rss>
