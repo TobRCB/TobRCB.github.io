@@ -87,7 +87,7 @@ names(st_G_dat)<-make.names(names(st_G_dat))
 
 Now, a first look at the $\delta$¹⁸O time series reveals different record lengths and some more or less huge data gaps.
 
-```{r, echo=TRUE, fig.height=8, fig.width=10, message=FALSE, warning=FALSE}
+```{r, echo=TRUE, fig.height=8, fig.width=9, message=FALSE, warning=FALSE}
 ggplot(st_G_dat %>% select(c(1), Date, O18) , aes(Date, O18))+
   geom_point(size=.25)+
   facet_wrap(~ Name.of.site)
@@ -126,7 +126,7 @@ t4<-filter(fdat, Name.of.site %in% stat)
 The pre-processed data can now be examined with the ggplot function.
 Here is an example of the extracted $\delta$¹⁸O time series:
 
-```{r, echo=T, fig.height=8, fig.width=10, message=FALSE, warning=FALSE}
+```{r, echo=T, fig.height=8, fig.width=9, message=FALSE, warning=FALSE}
 ggplot(group_by(t4, Name.of.site) %>% bind_rows(),
        aes(x=Date, y=O18))+
   geom_point( size=.5)+
@@ -158,7 +158,7 @@ wlsy<-aswj %>% unnest(waterline %>% purrr::map(broom::glance))
 
 Now that the regression analyses are done, let's plot the slopes and the R²s on a German map, by using the world database of the package maps as well as ggplot2.
 
-```{r, echo=TRUE, fig.height=8, fig.width=10, message=FALSE, warning=FALSE}
+```{r, echo=TRUE, fig.height=8, fig.width=9, message=FALSE, warning=FALSE}
 
 lla<-aswj %>% unnest(data) %>% select(Latitude, Longitude, Altitude) %>% unique() 
 

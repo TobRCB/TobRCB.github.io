@@ -1,0 +1,128 @@
+---
+date: 2017-05-19
+title: Scrape Brandenburgs water data from metaver.de
+description: "Scraping with RSelenium"
+
+author: Tobias Recke
+type: 'post'
+image: "snippets/mv.png"
+showonlyimage: false
+---
+  
+
+```{r, eval=FALSE}
+library(rvest)
+library(dplyr)
+library(magrittr)
+library(RSelenium)
+library(stringr)
+```
+  
+####  Specify chrome download folder in RSelenium
+[found here](http://stackoverflow.com/questions/35504731/specify-download-folder-in-rselenium)  
+
+```{r, eval=FALSE}
+
+eCaps <- list(chromeOptions =
+                list(
+                  prefs = list(
+                    "profile.default_content_settings.popups" = 0L,
+                    "download.prompt_for_download" = FALSE,
+                    "download.default_directory" = paste0(getwd(), '/down_f')
+                  )
+                ))
+
+rD <- rsDriver(browser = "chrome",
+    extraCapabilities = eCaps)
+
+remDr <- rD[["client"]]
+
+
+session <-"https://metaver.de/search/dls/#?serviceId=365B64CD-55CA-4C65-8F48-8B93B9C06E40"
+remDr$navigate(session)
+
+# capture the titles with rvest
+hvt <- read_html(remDr$getPageSource()[[1]])
+sln <-html_nodes(hvt, css = "#templateContainer > accordion > div")  %>% html_children()
+class_heeading <-bind_rows(lapply(xml_attrs(sln), function(x)
+    data.frame(as.list(x), stringsAsFactors = FALSE))) [1:2]
+
+
+```
+    
+#### Get the data from metaver
+[resource](https://metaver.de/search/dls/#?serviceId=365B64CD-55CA-4C65-8F48-8B93B9C06E40)
+
+```{r, eval=FALSE}
+
+# continuous variable
+up <- 1
+
+#loop
+lapply(1:length(class_heeading[,2]), function(x) {
+  webElem <-
+    remDr$findElement(
+      using = 'xpath',
+      paste0(
+        '//*[@id="templateContainer"]/accordion/div/div[',
+        x,
+        ']/div[1]/div/h4/div'
+      )
+    )
+  webElem$clickElement()
+  print(paste('öffne Panel: ', class_heeading[x, 2]))
+  Sys.sleep(3)
+  options(show.error.messages = TRUE)
+  while (class(try(suppressMessages({
+    remDr$findElement(
+      using = 'xpath',
+      paste0(
+        '//*[@id="templateContainer"]/accordion/div/div[',
+        x,
+        ']/div[2]/div/div[2]/span[',
+        up,
+        ']/a'
+      )
+    )
+  }),
+  silent = T)) == "webElement") {
+    suppressMessages({
+      webElem <-
+        remDr$findElement(
+          using = 'xpath',
+          paste0(
+            '//*[@id="templateContainer"]/accordion/div/div[',
+            x,
+            ']/div[2]/div/div[2]/span[',
+            up,
+            ']/a'
+          )
+        )
+    })
+    Sys.sleep(3)
+    webElem$clickElement()
+    up <- up + 1
+    if (str_detect(remDr$getCurrentUrl()[[1]], 'metaver') != T) {
+      remDr$navigate(session)
+      print(paste('Download: ', class_heeading[x, 2], 'stopped'))
+      Sys.sleep(10)
+    }
+    if (class(try(suppressMessages({
+      remDr$findElement(
+        using = 'xpath',
+        paste0(
+          '//*[@id="templateContainer"]/accordion/div/div[',
+          x,
+          ']/div[2]/div/div[2]/span[',
+          up,
+          ']/a'
+        )
+      )
+    }))) == "try-error")
+    break
+    
+  }
+})
+
+```
+
