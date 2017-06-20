@@ -2,8 +2,8 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>/snippets/download-brandenburgs-water-dat-from-metaver-de/</loc>
-    <lastmod>2017-05-19T00:00:00+00:00</lastmod>
+    <loc>/blog/2017-06-20-brandenburgs-wasser-daten-in-einer-shiny-app/</loc>
+    <lastmod>2017-06-20T00:00:00+00:00</lastmod>
   </url>
   
   <url>
@@ -27,7 +27,7 @@
   
   <url>
     <loc>/blog/</loc>
-    <lastmod>2016-11-29T00:00:00+00:00</lastmod>
+    <lastmod>2017-06-20T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -41,19 +41,80 @@
   </url>
   
   <url>
+    <loc>/tags/germany/</loc>
+    <lastmod>2017-05-19T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/ggiraph/</loc>
+    <lastmod>2017-05-10T18:25:39+02:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/luis-bb/</loc>
+    <lastmod>2017-06-20T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/metaver.de/</loc>
+    <lastmod>2017-05-19T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/r/</loc>
+    <lastmod>2017-06-20T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/rselenium/</loc>
+    <lastmod>2017-05-19T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/rvest/</loc>
+    <lastmod>2017-05-19T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/shiny/</loc>
+    <lastmod>2017-06-20T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>/snippets/</loc>
     <lastmod>2017-05-19T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
+    <loc>/tags/table/</loc>
+    <lastmod>2017-05-10T18:25:39+02:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>/tags/</loc>
+    <lastmod>2017-05-19T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>/</loc>
-    <lastmod>2017-05-19T00:00:00+00:00</lastmod>
+    <lastmod>2017-06-20T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/umweltinformationssystem-brandenburg/</loc>
+    <lastmod>2017-06-20T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   

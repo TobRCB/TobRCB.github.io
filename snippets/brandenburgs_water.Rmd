@@ -2,11 +2,11 @@
 date: 2017-05-19
 title: Scrape Brandenburgs water data from metaver.de
 description: "Scraping with RSelenium"
-
 author: Tobias Recke
 type: 'post'
 image: "snippets/mv.png"
 showonlyimage: false
+tags: [RSelenium, R, rvest, Germany, metaver.de, UmweltInformationssystem Brandenburg, LUIS-BB]
 ---
   
 
@@ -19,7 +19,7 @@ library(stringr)
 ```
   
 ####  Specify chrome download folder in RSelenium
-[found here](http://stackoverflow.com/questions/35504731/specify-download-folder-in-rselenium)  
+<a href="http://stackoverflow.com/questions/35504731/specify-download-folder-in-rselenium" target="_blank">found here</a>
 
 ```{r, eval=FALSE}
 
@@ -51,7 +51,7 @@ class_heeading <-bind_rows(lapply(xml_attrs(sln), function(x)
 ```
     
 #### Get the data from metaver
-[resource](https://metaver.de/search/dls/#?serviceId=365B64CD-55CA-4C65-8F48-8B93B9C06E40)
+<a href="https://metaver.de/search/dls/#?serviceId=365B64CD-55CA-4C65-8F48-8B93B9C06E40" target="_blank">resource</a>
 
 ```{r, eval=FALSE}
 

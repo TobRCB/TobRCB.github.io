@@ -101,7 +101,7 @@ ga('send', 'pageview');
     <div class="copyright">
       <p class="credit">
         
-          &copy;2016 Tobias Recke
+          &copy;2017 TobRecke
         
         | Template by <a href="https://bootstrapious.com/free-templates" class="external">Bootstrapious.com</a>
 
@@ -122,7 +122,7 @@ ga('send', 'pageview');
             <div class="row">
                   <div class="col-sm-4">
                     <div class="image">
-                      <img src="/blog/index.jpeg" class="img-responsive" alt="">
+                      <img src="/" class="img-responsive" alt="">
                     </div>
                   </div>
 
@@ -146,18 +146,18 @@ ga('send', 'pageview');
    <div class="content-column-content">
           <div class="col-lg-8">
 
-<p><strong>The tutorial contains:</strong><br />
-* theoretical background of the GMWL<br />
-* Data pre-processing<br />
-* linear regression analyses (LMWLs)<br />
-* result visualization in geographic map<br />
-* resources</p>
-<p><strong>The tutorial depends on the following packages:</strong><br />
-* library(dplyr)<br />
-* library(purrr)<br />
-* library(tidyr)<br />
-* library(zoo)<br />
-*library(ggplot2)</p>
+<p><strong>The tutorial depends on the following packages:</strong></p>
+<ul>
+<li>library(dplyr)<br />
+</li>
+<li>library(purrr)<br />
+</li>
+<li>library(tidyr)<br />
+</li>
+<li>library(zoo)<br />
+</li>
+<li>library(ggplot2)</li>
+</ul>
 <div id="theoretical-backround" class="section level3">
 <h3>Theoretical Backround</h3>
 <p>The hydrogen and oxygen isotopic signatures of precipitation are related on a global scale. The relationship was first observed by Harmon Craig (1961), who defined the Global Meteoric Water Line (GMWL):</p>
@@ -169,11 +169,11 @@ ga('send', 'pageview');
 <p>To calculate the LMWLs of different stations of Germany by using the <a href="http://www-naweb.iaea.org/napc/ih/IHS_resources_gnip.html">GNIP database</a> some pre-processing is a must. Fortunately the whole database is already read to a tidy data frame, as described <a href="http://n-dim.de/tutorial/webscraping-with-rvest.html">here</a>.</p>
 <p>So, at a first step the tibble ‘stations’ is filtered for the data frames of Germany.</p>
 <pre class="r"><code>stG&lt;-filter(stations, Country ==&#39;Germany&#39;)</code></pre>
-<p>Then the map function of the package purrr is used to select the columns of interest of each data frame. Finally the dplyr bind_rows function binds the multiple data frames into one ‘st_G_dat’.</p>
+<p>Then, the map function of the package purrr is used to select the columns of interest of each data frame. Finally, the dplyr bind_rows function binds the multiple data frames into one ‘st_G_dat’.</p>
 <pre class="r"><code>st_G_dat&lt;-map(stG$data, select, c(1:6,11,15,17,22:23)) %&gt;% bind_rows </code></pre>
 <p>The ‘st_G_dat’ data set contains 11 variables of different types e.g. character or integer</p>
 <pre class="r"><code>head(st_G_dat)</code></pre>
-<pre><code>## # A tibble: 6 × 11
+<pre><code>## # A tibble: 6 x 11
 ##           `Name of site` Country `WMO Code` Latitude Longitude Altitude
 ##                    &lt;chr&gt;   &lt;chr&gt;      &lt;int&gt;    &lt;dbl&gt;     &lt;dbl&gt;    &lt;int&gt;
 ## 1 GARMISCH-PARTENKIRCHEN      DE    1096300  47.4828   11.0622      719
@@ -184,7 +184,7 @@ ga('send', 'pageview');
 ## 6 GARMISCH-PARTENKIRCHEN      DE    1096300  47.4828   11.0622      719
 ## # ... with 5 more variables: Date &lt;chr&gt;, O18 &lt;dbl&gt;, H2 &lt;dbl&gt;,
 ## #   Precipitation &lt;dbl&gt;, `Air Temperature` &lt;dbl&gt;</code></pre>
-<p>For further analyses the time variable needs to be converted from text to a time instance like yearmon from the package zoo. Then new variables like month and year are easily added by the mutate function.</p>
+<p>For further analyses the time variable needs to be converted from text to a time instance like yearmon from the package zoo. Then, new variables like month and year are easily added by the mutate function.</p>
 <pre class="r"><code>st_G_dat&lt;-st_G_dat %&gt;% mutate(Date = as.yearmon(Date)) %&gt;%
 mutate(Jahr = as.numeric(format(Date, &quot;%Y&quot;))) %&gt;%
 mutate(Monat = as.numeric(format(Date, &quot;%m&quot;)) )</code></pre>
@@ -196,9 +196,9 @@ mutate(Monat = as.numeric(format(Date, &quot;%m&quot;)) )</code></pre>
   facet_wrap(~ Name.of.site)</code></pre>
 <p><img src="/blog/LMWLs_files/figure-html/unnamed-chunk-7-1.png" width="864" /></p>
 <p>To analyze the isotopic signatures of the German stations, it is obvious to select those stations that contain a lot of samples in a common time window such as the 13 years lasting period between 1997 and 2009. To achieve this selection a few more steps have to be taken.</p>
-<p>At first the data set needs to be filtered for a specific time period.</p>
+<p>At first, the data set needs to be filtered for a specific time period.</p>
 <pre class="r"><code>fdat&lt;-st_G_dat %&gt;% group_by(Name.of.site) %&gt;% filter(., Jahr %in% seq(1997,2009 ,1))</code></pre>
-<p>Next up is to create a data set that additionally contains a variable of the period length of each station.</p>
+<p>Next up, is to create a data set that additionally contains a variable of the period length of each station.</p>
 <pre class="r"><code>dum&lt;-fdat %&gt;% group_by(Name.of.site) %&gt;% distinct(Jahr) %&gt;% mutate(Jahr, n = n())  </code></pre>
 <p>In a further step the station names of the previously created data set, that match the time period of 13 years, are extracted and saved as vector.</p>
 <pre class="r"><code>stat&lt;-summarise(dum, LJ=length(Jahr)) %&gt;% filter(LJ==13) %&gt;% 

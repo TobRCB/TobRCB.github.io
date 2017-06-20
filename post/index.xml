@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on Tobias Recke</title>
+    <link>/post/</link>
+    <description>Recent content in Posts on Tobias Recke</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&amp;copy;2016 Tobias Recke</copyright>
+    <lastBuildDate>Tue, 20 Jun 2017 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Brandenburgs Wasser Daten in einer Shiny App</title>
+      <link>/post/2017-06-20-seite-app/</link>
+      <pubDate>Tue, 20 Jun 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2017-06-20-seite-app/</guid>
+      <description>Die App  In Brandenburg werden die Wasserstands- und Durchfluss-Messungen verschiedener Pegel vom Landesamt für Umwelt Brandenburg im UmweltInformationssystem Brandenburg (LUIS-BB) bereitgestellt. Sie können beispielsweise von den nachfolgenden Links bezogen werden.
+   Die Durchfluss-Daten gibt es: 1. hier, 2. hier, und 3. hier.
+ Die Wasserstands-Daten stammen von: 1. hier, 2. hier, und 3. hier.    Den Links können Rohdaten, gemessen um 06:00 Uhr in der Früh, entnommen werden.</description>
+    </item>
+    
+    <item>
+      <title>Brandenburgs Wasser-Daten in einer Shiny App</title>
+      <link>/post/2017-06-20-brandenburgs-wasser-daten-in-einer-shiny-app/</link>
+      <pubDate>Tue, 20 Jun 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2017-06-20-brandenburgs-wasser-daten-in-einer-shiny-app/</guid>
+      <description>Die App  In Brandenburg werden die Wasserstands- und Durchfluss-Messungen verschiedener Pegel vom Landesamt für Umwelt Brandenburg im UmweltInformationssystem Brandenburg (LUIS-BB) bereitgestellt. Sie können beispielsweise von den nachfolgenden Links bezogen werden.
+   Die Durchfluss-Daten gibt es: 1. hier, 2. hier, und 3. hier.
+ Die Wasserstands-Daten stammen von: 1. hier, 2. hier, und 3. hier.    Den Links können Rohdaten, gemessen um 06:00 Uhr in der Früh, entnommen werden.</description>
+    </item>
+    
+  </channel>
+</rss>

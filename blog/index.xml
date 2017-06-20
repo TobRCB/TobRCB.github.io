@@ -1,16 +1,27 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Blogs on Tobias Recke</title>
+    <title>Blog on Tobias Recke</title>
     <link>/blog/</link>
-    <description>Recent content in Blogs on Tobias Recke</description>
+    <description>Recent content in Blog on Tobias Recke</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <copyright>&amp;copy;2016 Tobias Recke</copyright>
-    <lastBuildDate>Tue, 29 Nov 2016 00:00:00 +0000</lastBuildDate>
+    <copyright>&amp;copy;2017 TobRecke</copyright>
+    <lastBuildDate>Tue, 20 Jun 2017 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/blog/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Brandenburgs Wasser-Daten in einer Shiny App</title>
+      <link>/blog/2017-06-20-brandenburgs-wasser-daten-in-einer-shiny-app/</link>
+      <pubDate>Tue, 20 Jun 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/2017-06-20-brandenburgs-wasser-daten-in-einer-shiny-app/</guid>
+      <description>Die App In Brandenburg werden die Wasserstands- und Durchfluss-Messungen verschiedener Pegel vom Landesamt für Umwelt Brandenburg im UmweltInformationssystem Brandenburg (LUIS-BB) bereitgestellt. Sie können beispielsweise von den nachfolgenden Links bezogen werden.
+ Die Durchfluss-Daten gibt es: 1. hier, 2. hier, und 3. hier.
+ Die Wasserstands-Daten stammen von: 1. hier, 2. hier, und 3. hier.  Den Links können Rohdaten, gemessen um 06:00 Uhr in der Früh, entnommen werden. Das LUIS-BB stellt die Daten der vergangenen sechs Tage online bereit und weist zugleich darauf hin, dass solche Rohdaten nicht für hydrologische Modelle geeignet sind.</description>
+    </item>
     
     <item>
       <title>Meteoric Water Lines from GNIP data</title>
@@ -18,19 +29,14 @@
       <pubDate>Tue, 29 Nov 2016 00:00:00 +0000</pubDate>
       
       <guid>/blog/lmwls/</guid>
-      <description>The tutorial contains:
-* theoretical background of the GMWL
-* Data pre-processing
-* linear regression analyses (LMWLs)
-* result visualization in geographic map
-* resources
-The tutorial depends on the following packages:
-* library(dplyr)
-* library(purrr)
-* library(tidyr)
-* library(zoo)
-*library(ggplot2)
-Theoretical Backround The hydrogen and oxygen isotopic signatures of precipitation are related on a global scale. The relationship was first observed by Harmon Craig (1961), who defined the Global Meteoric Water Line (GMWL):</description>
+      <description>The tutorial depends on the following packages:
+ library(dplyr)
+ library(purrr)
+ library(tidyr)
+ library(zoo)
+ library(ggplot2)  Theoretical Backround The hydrogen and oxygen isotopic signatures of precipitation are related on a global scale. The relationship was first observed by Harmon Craig (1961), who defined the Global Meteoric Water Line (GMWL):
+\(\delta\)²H = 8 \(\delta\)¹⁸O + 10 ‰, SMOW
+The GMWL is composed of weighted average annual values of precipitation data monitored at stations in the IAEA GNIP.</description>
     </item>
     
   </channel>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>R on Tobias Recke</title>
+    <link>/tags/r/</link>
+    <description>Recent content in R on Tobias Recke</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&amp;copy;2017 TobRecke</copyright>
+    <lastBuildDate>Tue, 20 Jun 2017 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/r/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Brandenburgs Wasser-Daten in einer Shiny App</title>
+      <link>/blog/2017-06-20-brandenburgs-wasser-daten-in-einer-shiny-app/</link>
+      <pubDate>Tue, 20 Jun 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/2017-06-20-brandenburgs-wasser-daten-in-einer-shiny-app/</guid>
+      <description>Die App In Brandenburg werden die Wasserstands- und Durchfluss-Messungen verschiedener Pegel vom Landesamt für Umwelt Brandenburg im UmweltInformationssystem Brandenburg (LUIS-BB) bereitgestellt. Sie können beispielsweise von den nachfolgenden Links bezogen werden.
+ Die Durchfluss-Daten gibt es: 1. hier, 2. hier, und 3. hier.
+ Die Wasserstands-Daten stammen von: 1. hier, 2. hier, und 3. hier.  Den Links können Rohdaten, gemessen um 06:00 Uhr in der Früh, entnommen werden. Das LUIS-BB stellt die Daten der vergangenen sechs Tage online bereit und weist zugleich darauf hin, dass solche Rohdaten nicht für hydrologische Modelle geeignet sind.</description>
+    </item>
+    
+    <item>
+      <title>Scrape Brandenburgs water data from metaver.de</title>
+      <link>/snippets/brandenburgs_water/</link>
+      <pubDate>Fri, 19 May 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/snippets/brandenburgs_water/</guid>
+      <description>library(rvest) library(dplyr) library(magrittr) library(RSelenium) library(stringr) Specify chrome download folder in RSelenium found here
+eCaps &amp;lt;- list(chromeOptions = list( prefs = list( &amp;quot;profile.default_content_settings.popups&amp;quot; = 0L, &amp;quot;download.prompt_for_download&amp;quot; = FALSE, &amp;quot;download.default_directory&amp;quot; = paste0(getwd(), &amp;#39;/down_f&amp;#39;) ) )) rD &amp;lt;- rsDriver(browser = &amp;quot;chrome&amp;quot;, extraCapabilities = eCaps) remDr &amp;lt;- rD[[&amp;quot;client&amp;quot;]] session &amp;lt;-&amp;quot;https://metaver.de/search/dls/#?serviceId=365B64CD-55CA-4C65-8F48-8B93B9C06E40&amp;quot; remDr$navigate(session) # capture the titles with rvest hvt &amp;lt;- read_html(remDr$getPageSource()[[1]]) sln &amp;lt;-html_nodes(hvt, css = &amp;quot;#templateContainer &amp;gt; accordion &amp;gt; div&amp;quot;) %&amp;gt;% html_children() class_heeading &amp;lt;-bind_rows(lapply(xml_attrs(sln), function(x) data.</description>
+    </item>
+    
+  </channel>
+</rss>
