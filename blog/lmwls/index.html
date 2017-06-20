@@ -150,21 +150,22 @@ ga('send', 'pageview');
 * theoretical background of the GMWL<br />
 * Data pre-processing<br />
 * linear regression analyses (LMWLs)<br />
-* result visualization in geographic map</p>
+* result visualization in geographic map<br />
+* resources</p>
 <p><strong>The tutorial depends on the following packages:</strong><br />
 * library(dplyr)<br />
 * library(purrr)<br />
 * library(tidyr)<br />
 * library(zoo)<br />
 *library(ggplot2)</p>
-<div id="theoretical-backround" class="section level1">
-<h1>Theoretical Backround</h1>
+<div id="theoretical-backround" class="section level3">
+<h3>Theoretical Backround</h3>
 <p>The hydrogen and oxygen isotopic signatures of precipitation are related on a global scale. The relationship was first observed by Harmon Craig (1961), who defined the Global Meteoric Water Line (GMWL):</p>
 <p><span class="math inline">\(\delta\)</span>²H = 8 <span class="math inline">\(\delta\)</span>¹⁸O + 10 ‰, SMOW</p>
 <p>The GMWL is composed of weighted average annual values of precipitation data monitored at stations in the IAEA GNIP. Therefore it is actually an average of many local or regional meteoric water lines, which differ from the GMWL in slope and deuterium intercept because of varying climatic and geographic parameters (Clark &amp; Fritz 1997).</p>
 </div>
-<div id="data-pre-processing" class="section level1">
-<h1>Data pre-processing</h1>
+<div id="data-pre-processing" class="section level3">
+<h3>Data pre-processing</h3>
 <p>To calculate the LMWLs of different stations of Germany by using the <a href="http://www-naweb.iaea.org/napc/ih/IHS_resources_gnip.html">GNIP database</a> some pre-processing is a must. Fortunately the whole database is already read to a tidy data frame, as described <a href="http://n-dim.de/tutorial/webscraping-with-rvest.html">here</a>.</p>
 <p>So, at a first step the tibble ‘stations’ is filtered for the data frames of Germany.</p>
 <pre class="r"><code>stG&lt;-filter(stations, Country ==&#39;Germany&#39;)</code></pre>
@@ -212,8 +213,8 @@ mutate(Monat = as.numeric(format(Date, &quot;%m&quot;)) )</code></pre>
   facet_wrap(~ Name.of.site)</code></pre>
 <p><img src="/blog/LMWLs_files/figure-html/unnamed-chunk-12-1.png" width="864" /></p>
 </div>
-<div id="regression-analyses" class="section level1">
-<h1>Regression Analyses</h1>
+<div id="regression-analyses" class="section level3">
+<h3>Regression Analyses</h3>
 <p>With the pre-processed data set the linear relationship of <span class="math inline">\(\delta\)</span>²H and <span class="math inline">\(\delta\)</span>¹⁸O of each station can now be calculated, as shown in the next example. The example was inspired by Stumpp et al. (2014). The source code mainly originates from <a href="https://blog.rstudio.org/2016/02/02/tidyr-0-4-0/">Rstudio blog</a>.</p>
 <pre class="r"><code>aswj&lt;-t4 %&gt;% 
   group_by(Name.of.site) %&gt;% 
@@ -241,8 +242,10 @@ ggplot() +  geom_polygon(data=ger, aes(x=long, y=lat, group=group), fill=&#39;wh
          size = guide_legend(order=1))</code></pre>
 <p><img src="/blog/LMWLs_files/figure-html/unnamed-chunk-15-1.png" width="864" /></p>
 <p>The plot reveals some dependencies between the isotopic signatures and the parameters latitude and elevation. For example, the continental stations at higher elevations have steeper slopes than the coastal ones. Indeed these effects are subject to temperature dependent thermodynamic fractionations (e.g. due to humidity) (Clark &amp; Fritz 1997; Stumpp et al. 2014).</p>
-<p>Sources:<br />
-Stumpp, C., Klaus, J., &amp; Stichler, W. (2014). Analysis of long-term stable isotopic composition in German precipitation. Journal of Hydrology, 517, 351-361.</p>
+</div>
+<div id="resources" class="section level3">
+<h3>Resources:</h3>
+<p>Stumpp, C., Klaus, J., &amp; Stichler, W. (2014). Analysis of long-term stable isotopic composition in German precipitation. Journal of Hydrology, 517, 351-361.</p>
 <p>Clark, I. D., &amp; Fritz, P. (1997). Environmental isotopes in hydrogeology. CRC press.</p>
 </div>
 

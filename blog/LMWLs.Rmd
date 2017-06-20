@@ -29,7 +29,8 @@ load(file="/home/tob/Dropbox/Nanu/isotope/isotope/myEnv.RData")
 * Data pre-processing   
 * linear regression analyses (LMWLs)  
 * result visualization in geographic map  
-
+* resources
+  
 **The tutorial depends on the following packages:**   
 * library(dplyr)  
 * library(purrr)  
@@ -38,7 +39,7 @@ load(file="/home/tob/Dropbox/Nanu/isotope/isotope/myEnv.RData")
 *library(ggplot2)  
 
 
-# Theoretical Backround
+### Theoretical Backround
 The hydrogen and oxygen isotopic signatures of precipitation are related on a global scale. The relationship was first observed by Harmon Craig (1961), who defined the Global Meteoric Water Line (GMWL):
 
 $\delta$²H = 8 $\delta$¹⁸O + 10 ‰, SMOW
@@ -46,7 +47,7 @@ $\delta$²H = 8 $\delta$¹⁸O + 10 ‰, SMOW
 The GMWL is composed of weighted average annual values of precipitation data monitored at stations in the IAEA GNIP. Therefore it is actually an average of many local or regional meteoric water lines, which differ from the GMWL in slope and deuterium intercept because of varying climatic and geographic parameters (Clark & Fritz 1997). 
 
 
-# Data pre-processing
+### Data pre-processing
 To calculate the LMWLs of different stations of Germany by using the [GNIP database](http://www-naweb.iaea.org/napc/ih/IHS_resources_gnip.html) some pre-processing is a must.
 Fortunately the whole database is already read to a tidy data frame, as described [here](http://n-dim.de/tutorial/webscraping-with-rvest.html).
 
@@ -137,7 +138,7 @@ ggplot(group_by(t4, Name.of.site) %>% bind_rows(),
 
 
 
-# Regression Analyses 
+### Regression Analyses 
 With the pre-processed data set the linear relationship of $\delta$²H and $\delta$¹⁸O of each station can now be calculated, as shown in the next example. The example was inspired by Stumpp et al. (2014). The source code mainly originates from [Rstudio blog](https://blog.rstudio.org/2016/02/02/tidyr-0-4-0/).  
 
 
@@ -181,11 +182,11 @@ ggplot() +  geom_polygon(data=ger, aes(x=long, y=lat, group=group), fill='white'
 ```
 
 
-The plot reveals some dependencies between the isotopic signatures and the parameters latitude and elevation. For example, the continental stations at higher elevations have steeper slopes than the coastal ones. Indeed these effects are subject to temperature dependent thermodynamic fractionations (e.g. due to humidity) (Clark & Fritz 1997; Stumpp et al. 2014).   
+The plot reveals some dependencies between the isotopic signatures and the parameters latitude and elevation. For example, the continental stations at higher elevations have steeper slopes than the coastal ones. Indeed these effects are subject to temperature dependent thermodynamic fractionations (e.g. due to humidity) (Clark & Fritz 1997; Stumpp et al. 2014).     
 
 
 
-Sources:  
+### Resources:  
 Stumpp, C., Klaus, J., & Stichler, W. (2014). Analysis of long-term stable isotopic composition in German precipitation. Journal of Hydrology, 517, 351-361.
 
 Clark, I. D., & Fritz, P. (1997). Environmental isotopes in hydrogeology. CRC press.

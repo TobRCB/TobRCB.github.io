@@ -23,6 +23,7 @@
 * Data pre-processing
 * linear regression analyses (LMWLs)
 * result visualization in geographic map
+* resources
 The tutorial depends on the following packages:
 * library(dplyr)
 * library(purrr)
