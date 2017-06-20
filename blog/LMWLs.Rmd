@@ -5,9 +5,16 @@ title:  Meteoric Water Lines from GNIP data
 description: "Analyzing IAEA GNIP data with R." 
 type: 'post'
 author: 'Tobias Recke'
-image: "blog/index.jpeg"
-showonlyimage: false
-
+#image: "blog/index.jpeg"
+#showonlyimage: false
+output: 
+  html_document: 
+    fig_caption: yes
+    keep_md: no
+    number_sections: no
+    smart: yes
+    toc: yes
+    toc_depth: 5
 ---
 
 
@@ -24,19 +31,15 @@ library(ggplot2)
 stations<-readRDS('/home/tob/Dropbox/Nanu/isotope/isotope/stations.RDS')
 load(file="/home/tob/Dropbox/Nanu/isotope/isotope/myEnv.RData")
 ```
-**The tutorial contains:**  
-* theoretical background of the GMWL  
-* Data pre-processing   
-* linear regression analyses (LMWLs)  
-* result visualization in geographic map  
-* resources
-  
+
+
 **The tutorial depends on the following packages:**   
+
 * library(dplyr)  
 * library(purrr)  
 * library(tidyr)  
 * library(zoo)  
-*library(ggplot2)  
+* library(ggplot2)  
 
 
 ### Theoretical Backround
@@ -56,8 +59,8 @@ So, at a first step the tibble 'stations' is filtered for the data frames of Ger
 stG<-filter(stations, Country =='Germany')
 ```
 
-Then the map function of the package  purrr is used to select the columns of interest of each data frame. 
-Finally the dplyr bind_rows function binds the multiple data frames into one 'st_G_dat'.
+Then, the map function of the package  purrr is used to select the columns of interest of each data frame. 
+Finally, the dplyr bind_rows function binds the multiple data frames into one 'st_G_dat'.
 
 ```{r, include=T}
 st_G_dat<-map(stG$data, select, c(1:6,11,15,17,22:23)) %>% bind_rows 
@@ -70,7 +73,7 @@ head(st_G_dat)
 
   
 For further analyses the time variable needs to be converted from text to a time instance like yearmon from the package zoo.
-Then new variables like month and year are easily added by the mutate function. 
+Then, new variables like month and year are easily added by the mutate function. 
 ```{r, include=T}
 
 st_G_dat<-st_G_dat %>% mutate(Date = as.yearmon(Date)) %>%
@@ -100,12 +103,12 @@ To analyze the isotopic signatures of the German stations,
 it is obvious to select those stations that contain a lot of samples in a common time window 
 such as the 13 years lasting period between 1997 and 2009. To achieve this selection a few more steps have to be taken.
 
-At first the data set needs to be filtered for a specific time period.
+At first, the data set needs to be filtered for a specific time period.
 ```{r, include=T}
 fdat<-st_G_dat %>% group_by(Name.of.site) %>% filter(., Jahr %in% seq(1997,2009 ,1))
 ```
 
-Next up is to create a data set that additionally contains a variable of the period length of each station.    
+Next up, is to create a data set that additionally contains a variable of the period length of each station.    
 ```{r, include=T}
 dum<-fdat %>% group_by(Name.of.site) %>% distinct(Jahr) %>% mutate(Jahr, n = n())  
 ```
