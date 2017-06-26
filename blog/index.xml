@@ -13,14 +13,14 @@
     
     
     <item>
-      <title>Brandenburgs Wasser-Daten in einer Shiny App</title>
+      <title>Brandenburgs Pegel-Daten in einer Shiny App</title>
       <link>/blog/2017-06-20-brandenburgs-wasser-daten-in-einer-shiny-app/</link>
       <pubDate>Tue, 20 Jun 2017 00:00:00 +0000</pubDate>
       
       <guid>/blog/2017-06-20-brandenburgs-wasser-daten-in-einer-shiny-app/</guid>
-      <description>Die App In Brandenburg werden die Wasserstands- und Durchfluss-Messungen verschiedener Pegel vom Landesamt für Umwelt Brandenburg im UmweltInformationssystem Brandenburg (LUIS-BB) bereitgestellt. Sie können beispielsweise von den nachfolgenden Links bezogen werden.
+      <description>Die App In Brandenburg werden Wasserstands- und Durchfluss-Messungen verschiedener Pegel vom Landesamt für Umwelt Brandenburg (LfU) im UmweltInformationssystem Brandenburg (LUIS-BB) bereitgestellt. Sie können beispielsweise von den nachfolgenden Links bezogen werden.
  Die Durchfluss-Daten gibt es: 1. hier, 2. hier, und 3. hier.
- Die Wasserstands-Daten stammen von: 1. hier, 2. hier, und 3. hier.  Den Links können Rohdaten, gemessen um 06:00 Uhr in der Früh, entnommen werden. Das LUIS-BB stellt die Daten der vergangenen sechs Tage online bereit und weist zugleich darauf hin, dass solche Rohdaten nicht für hydrologische Modelle geeignet sind.</description>
+ Die Wasserstands-Daten stammen von: 1. hier, 2. hier, und 3. hier.  Den Links können Rohdaten der vergangenen sechs Tage entnommen werden, die mehrheitlich um 06:00 Uhr in der Früh gemessen wurden.</description>
     </item>
     
     <item>

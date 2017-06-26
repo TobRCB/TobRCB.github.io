@@ -2,7 +2,7 @@
 <html lang="en-us">
 <head><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<title>Brandenburgs Wasser-Daten in einer Shiny App</title>
+<title>Brandenburgs Pegel-Daten in einer Shiny App</title>
 <meta name="description" content="Describe your website">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="all,follow">
@@ -127,7 +127,7 @@ ga('send', 'pageview');
                   </div>
 
                   <div class="col-md-8">
-                      <h2>Brandenburgs Wasser-Daten in einer Shiny App</h2>
+                      <h2>Brandenburgs Pegel-Daten in einer Shiny App</h2>
                           <p class="author-category">
                             Tobias Recke
                           </p>
@@ -149,13 +149,13 @@ ga('send', 'pageview');
 <p><br></p>
 <div id="die-app" class="section level3">
 <h3>Die App</h3>
-<p>In Brandenburg werden die Wasserstands- und Durchfluss-Messungen verschiedener Pegel vom Landesamt für Umwelt Brandenburg im UmweltInformationssystem Brandenburg (LUIS-BB) bereitgestellt. Sie können beispielsweise von den nachfolgenden Links bezogen werden.</p>
+<p>In Brandenburg werden Wasserstands- und Durchfluss-Messungen verschiedener Pegel vom Landesamt für Umwelt Brandenburg (LfU) im UmweltInformationssystem Brandenburg (LUIS-BB) bereitgestellt. Sie können beispielsweise von den nachfolgenden Links bezogen werden.</p>
 <ul>
 <li>Die Durchfluss-Daten gibt es: 1. <a href="http://www.luis.brandenburg.de/w/hwmz/frankfurt/oder/pegel/W7100014/" target="_blank">hier</a>, 2. <a href="http://www.luis.brandenburg.de/w/hwmz/potsdam/mittlere%5Felbe/pegel/W7100009/" target="_blank">hier</a>, und 3. <a href="http://www.luis.brandenburg.de/w/hwmz/cottbus/pegel/W7100056/Default.aspx" target="_blank">hier</a>.<br />
 </li>
 <li>Die Wasserstands-Daten stammen von: 1. <a href="http://www.luis.brandenburg.de/w/hwmz/potsdam/mittlere%5Felbe/pegel/W7100008/" target="_blank">hier</a>, 2. <a href="http://www.luis.brandenburg.de/w/hwmz/cottbus/pegel/W7100047/Default.aspx" target="_blank">hier</a>, und 3. <a href="http://www.luis.brandenburg.de/w/hwmz/frankfurt/oder/pegel/W7100015/" target="_blank">hier</a>.</li>
 </ul>
-<p>Den Links können Rohdaten, gemessen um 06:00 Uhr in der Früh, entnommen werden. Das LUIS-BB stellt die Daten der vergangenen sechs Tage online bereit und weist zugleich darauf hin, dass solche Rohdaten nicht für hydrologische Modelle geeignet sind. Dennoch kann beispielsweise mit einer Shiny-App den Daten ein Wenig Farbe verliehen werden! Ein paar simple Plots helfen dabei, die Oberflächengewässer eines der wasserreichsten deutschen Bundesländer (Brandenburg hat rd. 3.000 Seen und über 30.000 Kilometer Flüsse und Bäche <a href="http://www.bund-brandenburg.de/themen_projekte/wasser/" target="_blank">(BUND, 2017)</a>) quantitativ etwas näher zu beleuchten.<br />
+<p>Den Links können Rohdaten der vergangenen sechs Tage entnommen werden, die mehrheitlich um 06:00 Uhr in der Früh gemessen wurden. Jedoch weist das LfU darauf hin, dass die Rohdaten nicht für hydrologische Modelle geeignet sind. Dennoch kann beispielsweise mit einer Shiny-App den Daten ein Wenig Farbe verliehen werden! Ein paar simple Plots helfen dabei, die Oberflächengewässer eines der wasserreichsten deutschen Bundesländer - Brandenburg hat ca. 3.000 Seen und über 30.000 Kilometer Flüsse und Bäche <a href="http://www.bund-brandenburg.de/themen_projekte/wasser/" target="_blank">(BUND, 2017)</a> - quantitativ etwas näher zu beleuchten.<br />
 In der App können über eine Checkbox bis zu 35 Monitoring-Stationen ausgewählt werden. Die Variablen Wasserstand [cm] und Durchfluss [m³/s] lassen sich anschließend als Zeitreihen abbilden und mittels deskriptiver Statistik beschreiben.</p>
 </div>
 <div id="link-zur-seite" class="section level3">
