@@ -32,6 +32,12 @@ stations<-readRDS('/home/tob/Dropbox/Nanu/isotope/isotope/stations.RDS')
 load(file="/home/tob/Dropbox/Nanu/isotope/isotope/myEnv.RData")
 ```
 
+## Content
+-   [Theoretical Backround](#theoretical-backround)
+-   [Data pre-processing](#data-pre-processing)
+-   [Regression Analyses](#regression-analyses)
+-   [Resources](#resources)
+
 
 **The tutorial depends on the following packages:**   
 
@@ -91,7 +97,7 @@ names(st_G_dat)<-make.names(names(st_G_dat))
 
 Now, a first look at the $\delta$¹⁸O time series reveals different record lengths and some more or less huge data gaps.
 
-```{r, echo=TRUE, fig.height=8, fig.width=9, message=FALSE, warning=FALSE}
+```{r, echo=TRUE, fig.height=8, fig.width=10, message=FALSE, warning=FALSE, out.width = "95%"}
 ggplot(st_G_dat %>% select(c(1), Date, O18) , aes(Date, O18))+
   geom_point(size=.25)+
   facet_wrap(~ Name.of.site)
@@ -130,7 +136,7 @@ t4<-filter(fdat, Name.of.site %in% stat)
 The pre-processed data can now be examined with the ggplot function.
 Here is an example of the extracted $\delta$¹⁸O time series:
 
-```{r, echo=T, fig.height=8, fig.width=9, message=FALSE, warning=FALSE}
+```{r, echo=T, fig.height=8, fig.width=10, message=FALSE, warning=FALSE, out.width = "95%"}
 ggplot(group_by(t4, Name.of.site) %>% bind_rows(),
        aes(x=Date, y=O18))+
   geom_point( size=.5)+

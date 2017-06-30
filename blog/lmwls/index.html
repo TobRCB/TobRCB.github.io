@@ -146,6 +146,14 @@ ga('send', 'pageview');
    <div class="content-column-content">
           <div class="col-lg-8">
 
+<div id="content" class="section level2">
+<h2>Content</h2>
+<ul>
+<li><a href="#theoretical-backround">Theoretical Backround</a></li>
+<li><a href="#data-pre-processing">Data pre-processing</a></li>
+<li><a href="#regression-analyses">Regression Analyses</a></li>
+<li><a href="#resources">Resources</a></li>
+</ul>
 <p><strong>The tutorial depends on the following packages:</strong></p>
 <ul>
 <li>library(dplyr)<br />
@@ -194,7 +202,7 @@ mutate(Monat = as.numeric(format(Date, &quot;%m&quot;)) )</code></pre>
 <pre class="r"><code>ggplot(st_G_dat %&gt;% select(c(1), Date, O18) , aes(Date, O18))+
   geom_point(size=.25)+
   facet_wrap(~ Name.of.site)</code></pre>
-<p><img src="/blog/LMWLs_files/figure-html/unnamed-chunk-7-1.png" width="864" /></p>
+<p><img src="/blog/LMWLs_files/figure-html/unnamed-chunk-7-1.png" width="95%" /></p>
 <p>To analyze the isotopic signatures of the German stations, it is obvious to select those stations that contain a lot of samples in a common time window such as the 13 years lasting period between 1997 and 2009. To achieve this selection a few more steps have to be taken.</p>
 <p>At first, the data set needs to be filtered for a specific time period.</p>
 <pre class="r"><code>fdat&lt;-st_G_dat %&gt;% group_by(Name.of.site) %&gt;% filter(., Jahr %in% seq(1997,2009 ,1))</code></pre>
@@ -211,7 +219,7 @@ mutate(Monat = as.numeric(format(Date, &quot;%m&quot;)) )</code></pre>
   geom_point( size=.5)+
   geom_line(size=.25)+
   facet_wrap(~ Name.of.site)</code></pre>
-<p><img src="/blog/LMWLs_files/figure-html/unnamed-chunk-12-1.png" width="864" /></p>
+<p><img src="/blog/LMWLs_files/figure-html/unnamed-chunk-12-1.png" width="95%" /></p>
 </div>
 <div id="regression-analyses" class="section level3">
 <h3>Regression Analyses</h3>
@@ -247,6 +255,7 @@ ggplot() +  geom_polygon(data=ger, aes(x=long, y=lat, group=group), fill=&#39;wh
 <h3>Resources:</h3>
 <p>Stumpp, C., Klaus, J., &amp; Stichler, W. (2014). Analysis of long-term stable isotopic composition in German precipitation. Journal of Hydrology, 517, 351-361.</p>
 <p>Clark, I. D., &amp; Fritz, P. (1997). Environmental isotopes in hydrogeology. CRC press.</p>
+</div>
 </div>
 
       
