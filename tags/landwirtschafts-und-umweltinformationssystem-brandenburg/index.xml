@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Landwirtschafts Und Umweltinformationssystem Brandenburg on Tobias Recke</title>
+    <link>/tags/landwirtschafts-und-umweltinformationssystem-brandenburg/</link>
+    <description>Recent content in Landwirtschafts Und Umweltinformationssystem Brandenburg on Tobias Recke</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&amp;copy;2017 TobRecke</copyright>
+    <lastBuildDate>Tue, 20 Jun 2017 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/landwirtschafts-und-umweltinformationssystem-brandenburg/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Brandenburgs Pegel-Messwerte in einer Shiny App</title>
+      <link>/blog/2017-06-20-brandenburgs-wasser-daten-in-einer-shiny-app/</link>
+      <pubDate>Tue, 20 Jun 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/2017-06-20-brandenburgs-wasser-daten-in-einer-shiny-app/</guid>
+      <description>Inhalt  Die App Link zur Seite Anmerkungen  
+Die App In Brandenburg werden Wasserstands- und Durchfluss-Daten verschiedener Monitoring-Stationen vom Landesamt für Umwelt Brandenburg (LfU) im Landwirtschafts- und UmweltInformationssystem Brandenburg (LUIS-BB) bereitgestellt. Sie können beispielsweise von den nachfolgenden Links bezogen werden.
+ Die Durchfluss-Daten gibt es: 1. hier, 2. hier, und 3. hier.
+ Die Wasserstands-Daten stammen von: 1. hier, 2. hier, und 3. hier.  Den Links können Rohdaten der vergangenen sechs Tage entnommen werden, die mehrheitlich um 06:00 Uhr in der Früh gemessen wurden.</description>
+    </item>
+    
+  </channel>
+</rss>

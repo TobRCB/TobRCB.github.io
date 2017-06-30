@@ -7,7 +7,7 @@ description: "Shiny Apps auf shinyapps.io"
 type: 'post'
 image: "blog/output.gif"
 showonlyimage: false
-tags: [UmweltInformationssystem Brandenburg, LUIS-BB, Shiny, R]
+tags: [Landwirtschafts und UmweltInformationssystem Brandenburg, LUIS-BB, Shiny, R]
 ---
 
 
