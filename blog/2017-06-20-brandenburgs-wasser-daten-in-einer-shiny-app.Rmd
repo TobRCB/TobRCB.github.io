@@ -2,7 +2,7 @@
 date: '2017-06-20'
 draft: false
 title: Brandenburgs Pegel-Messwerte in einer Shiny App
-author: 'Tobias Recke'
+author: 'TobR'
 description: "Shiny Apps auf shinyapps.io" 
 type: 'post'
 image: "blog/output.gif"
