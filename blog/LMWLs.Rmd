@@ -4,7 +4,7 @@ draft: true
 title:  Meteoric Water Lines from GNIP data
 description: "Analyzing IAEA GNIP data with R." 
 type: 'post'
-author: 'Tobias Recke'
+author: 'TobR'
 #image: "blog/index.jpeg"
 #showonlyimage: false
 output: 
