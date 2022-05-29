@@ -4,7 +4,7 @@ draft: true
 title: interactive plots with ggiraph 
 description: "Snippet from the MWL tutorial"
 type: 'post'
-author: 'Tobias Recke'
+author: 'TobR'
 image: "blog/d3.jpeg"
 showonlyimage: false
 tags: [ggiraph, table]
